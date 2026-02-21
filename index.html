@@ -11,7 +11,7 @@
             --text-color: #ffffff;
             --glass-border: rgba(255, 255, 255, 0.15);
             --audio-filter: invert(1);
-            --avatar-box-bg: rgba(255, 255, 255, 0.9); /* 纯白略带通透 */
+            --avatar-box-bg: #ffffff; /* 纯白 */
         }
 
         .light-mode {
@@ -20,7 +20,6 @@
             --text-color: #1a1a1c;
             --glass-border: rgba(0, 0, 0, 0.08);
             --audio-filter: invert(0);
-            --avatar-box-bg: #ffffff;
         }
 
         html {
@@ -32,48 +31,56 @@
         body {
             margin: 0; padding: 0; min-height: 100vh;
             color: var(--text-color);
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", sans-serif;
             background: transparent;
             display: flex; flex-direction: column;
             transition: all 0.4s ease;
         }
 
         .hero-spacer {
-            height: 55vh;
+            height: 58vh;
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
             text-align: center;
+            padding-top: 20px;
         }
 
-        /* 标题样式：局外夏的站台 */
+        /* 标题样式：加粗处理 */
         header h1 {
-            font-size: clamp(1.2rem, 6vw, 1.8rem);
-            font-weight: 200; letter-spacing: 6px; margin-bottom: 25px;
-            text-shadow: 0 0 20px rgba(255,255,255,0.2);
-            opacity: 0.9;
+            font-size: clamp(1.4rem, 6vw, 2rem);
+            font-weight: 800; /* 加粗 */
+            letter-spacing: 4px; 
+            margin-bottom: 35px;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            opacity: 1;
             text-transform: uppercase;
         }
 
-        /* 纯白圆角方块容器 */
+        /* 比例优化：白色圆角方块 (3:1) */
+        /* 头像保持60px左右，方块则需180px左右 */
         .profile-box {
-            width: 80px; height: 80px;
+            width: 180px; 
+            height: 180px;
             background: var(--avatar-box-bg);
-            border-radius: 22px; /* 圆角方块 */
+            border-radius: 40px; /* 更圆润的方块 */
             display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            transition: transform 0.3s ease;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.4);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .profile-box:hover {
-            transform: scale(1.05) rotate(2deg);
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
         }
 
-        /* 内部圆形头像 */
+        /* 内部圆形头像：大小保持不变 */
         .avatar-circle {
-            width: 62px; height: 62px;
-            border-radius: 50%; /* 完美圆形 */
+            width: 60px; 
+            height: 60px;
+            border-radius: 50%;
             overflow: hidden;
-            border: 2px solid rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.05);
+            background: #eee;
         }
 
         .avatar-circle img {
@@ -118,10 +125,9 @@
 
         .audio-card:hover { 
             background: rgba(255,255,255,0.09);
-            transform: translateY(-3px);
         }
 
-        .audio-info h3 { margin: 0; font-weight: 300; font-size: 1.15rem; }
+        .audio-info h3 { margin: 0; font-weight: 500; font-size: 1.15rem; }
         .audio-info p { font-size: 0.75rem; opacity: 0.4; margin: 8px 0 18px 0; }
 
         audio { width: 100%; filter: var(--audio-filter) opacity(0.4); height: 32px; }
