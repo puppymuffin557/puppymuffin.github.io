@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universe Order | Aurora Celestial</title>
+    <style>
+        :root {
+            --bg-black: #020205;
+            --neon-blue: #00d2ff;
+            --neon-glow: rgba(0, 210, 255, 0.6);
+            --mystic-purple: #9d50bb;
+            --glass-border: rgba(0, 210, 255, 0.2);
+        }
+
+        body {
+            margin: 0; padding: 0;
+            background-color: var(--bg-black);
+            color: #fff;
+            font-family: "Cinzel", "Inter", serif; /* 带有神秘感的字体 */
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex; flex-direction: column;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(15, 20, 60, 0.4) 0%, transparent 80%),
+                url('https://www.transparenttextures.com/patterns/stardust.png'); /* 星尘纹理 */
+        }
+
+        /* --- 背景星座装饰 --- */
+        .constellation-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; pointer-events: none; opacity: 0.3;
+        }
+
+        /* --- 弧形文字布局 --- */
+        .arc-header {
+            height: 300px; display: flex; justify-content: center; align-items: center;
+            position: relative; padding-top: 50px;
+        }
+        
+        .arc-text {
+            position: absolute; width: 400px; height: 400px;
+            animation: rotate 20s linear infinite;
+        }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .title-main {
+            font-size: 2.2rem; font-weight: 200; letter-spacing: 12px;
+            color: #fff; text-shadow: 0 0 20px var(--neon-glow);
+            z-index: 10;
+        }
+
+        /* --- 拟态贴纸面板 --- */
+        .order-panel {
+            flex-grow: 1; width: 92%; max-width: 500px; margin: 0 auto;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 40px;
+            padding: 40px; box-sizing: border-box;
+            box-shadow: 0 0 40px rgba(0, 210, 255, 0.1);
+            position: relative; margin-top: -50px;
+            margin-bottom: 50px;
+        }
+
+        /* Y2K 贴纸感装饰 */
+        .sticker-icon {
+            position: absolute; font-size: 1.5rem; color: var(--neon-blue);
+            filter: drop-shadow(0 0 5px var(--neon-blue)); opacity: 0.8;
+        }
+
+        .input-box {
+            width: 100%; background: rgba(0,0,0,0.5); border: 1px solid var(--glass-border);
+            border-radius: 15px; padding: 15px; color: var(--neon-blue);
+            font-size: 1rem; text-align: center; outline: none;
+            margin-bottom: 20px; transition: 0.3s;
+            box-shadow: inset 0 0 10px rgba(0, 210, 255, 0.1);
+        }
+        .input-box:focus { border-color: #fff; box-shadow: 0 0 20px var(--neon-glow); }
+
+        .btn-order {
+            width: 100%; padding: 15px; border-radius: 50px; border: 1px solid #fff;
+            background: transparent; color: #fff; cursor: pointer;
+            letter-spacing: 4px; text-transform: uppercase; font-size: 0.8rem;
+            transition: 0.4s;
+        }
+        .btn-order:hover {
+            background: #fff; color: #000; box-shadow: 0 0 30px #fff;
+        }
+
+        /* --- 订单列表项 --- */
+        .order-card {
+            background: rgba(255, 255, 255, 0.03); border: 1px dashed var(--glass-border);
+            border-radius: 20px; padding: 20px; margin-top: 20px;
+            display: flex; flex-direction: column; align-items: center;
+            animation: luminous 2s ease-in-out infinite alternate;
+        }
+        @keyframes luminous {
+            from { border-color: rgba(0, 210, 255, 0.2); }
+            to { border-color: rgba(0, 210, 255, 0.6); }
+        }
+
+        .order-status {
+            font-size: 0.6rem; color: var(--neon-blue); letter-spacing: 2px;
+            margin-top: 10px; text-transform: uppercase;
+        }
+
+        .back-btn {
+            position: absolute; top: 30px; left: 30px; text-decoration: none;
+            color: #fff; font-size: 0.7rem; opacity: 0.5; letter-spacing: 2px;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <a href="index.html" class="back-btn">← RETURN</a>
+
+    <div class="arc-header">
+        <svg class="arc-text" viewBox="0 0 100 100">
+            <path id="curve" d="M 25, 50 a 25,25 0 1,1 50,0 a 25,25 0 1,1 -50,0" fill="transparent"/>
+            <text font-size="5" fill="rgba(255,255,255,0.2)" letter-spacing="2">
+                <textPath xlink:href="#curve"> TRUST THE UNIVERSE • ALIGN YOUR ENERGY • </textPath>
+            </text>
+        </svg>
+        <h1 class="title-main">ORDER</h1>
+    </div>
+
+    <main class="order-panel">
+        <span class="sticker-icon" style="top: -20px; left: 20px;">✧</span>
+        <span class="sticker-icon" style="bottom: -10px; right: 20px;">☾</span>
+        
+        <div style="text-align: center; margin-bottom: 30px;">
+            <p style="font-size: 0.7rem; opacity: 0.5; letter-spacing: 3px;">向宇宙提交你的确定性订单</p>
+        </div>
+
+        <input type="text" id="orderInput" class="input-box" placeholder="输入已实现的愿望...">
+        <button class="btn-order" onclick="addOrder()">PLACE ORDER</button>
+
+        <div id="orderContainer"></div>
+    </main>
+
+    <script>
+        function addOrder() {
+            const val = document.getElementById('orderInput').value;
+            if(!val) return;
+
+            const container = document.getElementById('orderContainer');
+            const card = document.createElement('div');
+            card.className = 'order-card';
+            card.innerHTML = `
+                <div style="font-size: 0.9rem; font-weight: 700; color: #fff;">${val}</div>
+                <div class="order-status">◈ 宇宙工厂生产中... 已确认成交</div>
+            `;
+            
+            container.prepend(card);
+            document.getElementById('orderInput').value = '';
+
+            // 存储逻辑
+            const orders = JSON.parse(localStorage.getItem('aurora_orders') || '[]');
+            orders.unshift(val);
+            localStorage.setItem('aurora_orders', JSON.stringify(orders));
+        }
+
+        window.onload = () => {
+            const orders = JSON.parse(localStorage.getItem('aurora_orders') || '[]');
+            const container = document.getElementById('orderContainer');
+            orders.forEach(o => {
+                container.innerHTML += `
+                    <div class="order-card">
+                        <div style="font-size: 0.9rem; font-weight: 700;">${o}</div>
+                        <div class="order-status">◈ 宇宙工厂生产中... 已确认成交</div>
+                    </div>
+                `;
+            });
+        }
+    </script>
+</body>
+</html>
