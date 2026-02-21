@@ -11,7 +11,7 @@
             --text-color: #ffffff;
             --glass-border: rgba(255, 255, 255, 0.15);
             --audio-filter: invert(1);
-            --avatar-box-bg: #ffffff; /* 纯白 */
+            --avatar-box-bg: #ffffff;
         }
 
         .light-mode {
@@ -38,53 +38,64 @@
         }
 
         .hero-spacer {
-            height: 58vh;
+            height: 62vh; /* 稍微增加高度，适配更大的名片卡 */
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
             text-align: center;
-            padding-top: 20px;
         }
 
-        /* 标题样式：加粗处理 */
         header h1 {
             font-size: clamp(1.4rem, 6vw, 2rem);
-            font-weight: 800; /* 加粗 */
+            font-weight: 800;
             letter-spacing: 4px; 
-            margin-bottom: 35px;
+            margin-bottom: 30px;
             text-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            opacity: 1;
             text-transform: uppercase;
         }
 
-        /* 比例优化：白色圆角方块 (3:1) */
-        /* 头像保持60px左右，方块则需180px左右 */
-        .profile-box {
+        /* 3:1 名片盒设计 */
+        .profile-card {
             width: 180px; 
             height: 180px;
             background: var(--avatar-box-bg);
-            border-radius: 40px; /* 更圆润的方块 */
-            display: flex; justify-content: center; align-items: center;
+            border-radius: 40px;
+            display: flex; flex-direction: column; /* 纵向排列内容 */
+            justify-content: center; align-items: center;
             box-shadow: 0 15px 45px rgba(0,0,0,0.4);
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.4s ease;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
-        .profile-box:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        .profile-card:hover {
+            transform: translateY(-5px);
         }
 
-        /* 内部圆形头像：大小保持不变 */
+        /* 顶部头像 */
         .avatar-circle {
-            width: 60px; 
-            height: 60px;
+            width: 60px; height: 60px;
             border-radius: 50%;
             overflow: hidden;
+            margin-bottom: 12px; /* 给下方文字留空 */
             border: 1px solid rgba(0,0,0,0.05);
-            background: #eee;
         }
+        .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
 
-        .avatar-circle img {
-            width: 100%; height: 100%; object-fit: cover;
+        /* 名片小字排版 */
+        .card-info {
+            color: #1a1a1c; /* 黑色小字，在白底上清晰 */
+            text-align: center;
+        }
+        .card-info .name {
+            font-size: 0.9rem; font-weight: 600; margin: 0; letter-spacing: 2px;
+        }
+        .card-info .role {
+            font-size: 0.6rem; font-weight: 400; opacity: 0.6; 
+            margin: 2px 0 6px 0; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .card-info .social {
+            font-size: 0.5rem; font-weight: 300; opacity: 0.5;
+            white-space: nowrap; line-height: 1.4;
         }
 
         .glass-panel {
@@ -103,7 +114,6 @@
         }
 
         .search-container { width: 100%; max-width: 420px; margin-bottom: 40px; }
-
         #searchInput {
             width: 100%; padding: 15px 20px; border-radius: 30px;
             border: 1px solid var(--glass-border);
@@ -111,32 +121,23 @@
             color: var(--text-color);
             text-align: center; outline: none;
             backdrop-filter: blur(10px);
-            font-size: 0.95rem;
         }
 
         #audio-list { width: 100%; max-width: 620px; display: grid; gap: 18px; }
-
         .audio-card {
-            background: var(--card-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 22px; padding: 25px;
-            transition: 0.3s ease;
+            background: var(--card-bg); border: 1px solid var(--glass-border);
+            border-radius: 22px; padding: 25px; transition: 0.3s ease;
         }
-
-        .audio-card:hover { 
-            background: rgba(255,255,255,0.09);
-        }
-
+        .audio-card:hover { background: rgba(255,255,255,0.09); }
         .audio-info h3 { margin: 0; font-weight: 500; font-size: 1.15rem; }
         .audio-info p { font-size: 0.75rem; opacity: 0.4; margin: 8px 0 18px 0; }
-
         audio { width: 100%; filter: var(--audio-filter) opacity(0.4); height: 32px; }
 
         .theme-toggle {
             position: fixed; top: 20px; right: 20px; z-index: 100;
             background: rgba(255,255,255,0.08); border: 1px solid var(--glass-border);
-            padding: 8px 16px; border-radius: 20px; cursor: pointer;
-            color: var(--text-color); backdrop-filter: blur(10px); font-size: 0.65rem;
+            padding: 8px 16px; border-radius: 20px; cursor: pointer; color: var(--text-color);
+            font-size: 0.65rem;
         }
     </style>
 </head>
@@ -148,9 +149,14 @@
         <header>
             <h1>L'Étranger Été's Subliminal Station</h1>
             <div style="display: flex; justify-content: center;">
-                <div class="profile-box">
+                <div class="profile-card">
                     <div class="avatar-circle">
-                        <img src="https://i.pinimg.com/736x/f3/9b/01/f39b01a0cb38ea86d3bbad0e419fbdae.jpg" alt="L'Étranger Été">
+                        <img src="https://i.pinimg.com/736x/f3/9b/01/f39b01a0cb38ea86d3bbad0e419fbdae.jpg" alt="局外夏">
+                    </div>
+                    <div class="card-info">
+                        <p class="name">「局外夏」</p>
+                        <p class="role">submaker</p>
+                        <p class="social">bilibili 局外夏<br>YouTube@bulbby-j2m</p>
                     </div>
                 </div>
             </div>
@@ -179,10 +185,7 @@
                     const card = document.createElement('div');
                     card.className = 'audio-card';
                     card.innerHTML = `
-                        <div class="audio-info">
-                            <h3>${item.title}</h3>
-                            <p>${item.desc}</p>
-                        </div>
+                        <div class="audio-info"><h3>${item.title}</h3><p>${item.desc}</p></div>
                         <audio controls src="${item.url}"></audio>
                     `;
                     list.appendChild(card);
