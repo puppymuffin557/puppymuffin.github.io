@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KDY Tool | Aurora Manifest</title>
+    <style>
+        :root {
+            --bg-black: #020205;
+            --neon-gold: #f39c12;
+            --neon-blue: #00d2ff;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            margin: 0; padding: 20px; background: var(--bg-black);
+            color: #fff; font-family: "Inter", sans-serif;
+            min-height: 100vh; display: flex; flex-direction: column; align-items: center;
+        }
+
+        .back-nav { align-self: flex-start; text-decoration: none; color: #fff; opacity: 0.4; font-size: 0.7rem; letter-spacing: 2px; margin-bottom: 30px; }
+
+        .container { width: 100%; max-width: 700px; }
+
+        header h1 { font-weight: 100; letter-spacing: 15px; text-align: center; margin-bottom: 40px; text-shadow: 0 0 20px var(--neon-blue); }
+
+        /* --- 输入区样式 --- */
+        .step-card {
+            background: var(--glass); border: 1px solid var(--border);
+            border-radius: 30px; padding: 30px; margin-bottom: 25px;
+            backdrop-filter: blur(20px);
+        }
+
+        .label { font-size: 0.6rem; letter-spacing: 3px; color: var(--neon-blue); margin-bottom: 15px; display: block; text-transform: uppercase; }
+
+        input, textarea {
+            width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+            border-radius: 15px; padding: 15px; color: #fff; font-size: 1rem; outline: none; box-sizing: border-box;
+        }
+
+        /* --- 细化建议标签 --- */
+        .tips-container { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
+        .tip-tag {
+            font-size: 0.65rem; padding: 6px 12px; border-radius: 20px;
+            border: 1px solid var(--border); cursor: pointer; opacity: 0.6; transition: 0.3s;
+        }
+        .tip-tag:hover { opacity: 1; border-color: var(--neon-blue); background: rgba(0,210,255,0.1); }
+
+        .gen-btn {
+            width: 100%; padding: 18px; border-radius: 40px; border: 1px solid var(--neon-blue);
+            background: transparent; color: var(--neon-blue); cursor: pointer;
+            letter-spacing: 5px; font-weight: bold; margin-top: 10px; transition: 0.4s;
+        }
+        .gen-btn:hover { background: var(--neon-blue); color: #000; box-shadow: 0 0 30px var(--neon-blue); }
+
+        /* --- 结果显示区 --- */
+        .result-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 40px; }
+        .kdy-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+            border-left: 3px solid var(--neon-blue); padding: 20px; border-radius: 10px;
+            animation: fadeIn 0.5s ease;
+        }
+        .kdy-type { font-size: 0.55rem; color: var(--neon-blue); opacity: 0.5; margin-bottom: 8px; display: block; letter-spacing: 1px; }
+        .kdy-text { font-size: 0.95rem; line-height: 1.6; font-weight: 300; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="back-nav">← RETURN STATION</a>
+
+    <div class="container">
+        <header><h1>KDY TOOL</h1></header>
+
+        <div class="step-card">
+            <span class="label">Step 1: 核心意图</span>
+            <input type="text" id="mainGoal" placeholder="例如：拥有一笔丰厚的财富 / 建立完美的亲密关系">
+        </div>
+
+        <div class="step-card">
+            <span class="label">Step 2: 细化当前切入点</span>
+            <input type="text" id="subGoal" placeholder="例如：月收入达到十万 / 每天都感到被爱包围">
+            <div class="tips-container">
+                <div class="tip-tag" onclick="setSub('具体的金额/数字')"># 数字量化</div>
+                <div class="tip-tag" onclick="setSub('身心的感受与情绪')"># 情绪显化</div>
+                <div class="tip-tag" onclick="setSub('他人的赞美与评价')"># 外部反馈</div>
+                <div class="tip-tag" onclick="setSub('生活状态的改变')"># 场景描写</div>
+            </div>
+        </div>
+
+        <button class="gen-btn" onclick="generateKDY()">生成万能能量话术</button>
+
+        <div id="resultArea" class="result-grid">
+            </div>
+    </div>
+
+    <script>
+        function setSub(text) {
+            document.getElementById('subGoal').value = text;
+        }
+
+        function generateKDY() {
+            const main = document.getElementById('mainGoal').value;
+            const sub = document.getElementById('subGoal').value;
+            if(!main || !sub) return alert("请填写意图以对齐频率");
+
+            const container = document.getElementById('resultArea');
+            container.innerHTML = ""; // 清空
+
+            const templates = [
+                { type: "Afformations (启发式反问)", text: `为什么我能如此轻松地实现${main}，并且现在就感受到了${sub}？` },
+                { type: "Being Mode (现状对齐)", text: `我很感激，我正在这种${sub}的状态中，稳步扩展我的${main}。` },
+                { type: "Permission (允许发生)", text: `我允许并欢迎${main}以最完美的方式进入我的生命，我完全配得上${sub}。` },
+                { type: "Natural Flow (自然流动)", text: `对我来说，${sub}是如此自然的一件事，就如同呼吸一样，这全是因为我已经拥有了${main}。` },
+                { type: "Universal Logic (宇宙逻辑)", text: `宇宙正在全速运转以匹配我的频率，此时此刻，${main}与${sub}已在我的实相中合一。` },
+                { type: "Sensory Fact (五感事实)", text: `我能清晰地预见到${sub}发生时的喜悦，这种${main}带来的安全感真实不虚。` }
+            ];
+
+            templates.forEach((item, index) => {
+                setTimeout(() => {
+                    const card = document.createElement('div');
+                    card.className = 'kdy-card';
+                    card.innerHTML = `
+                        <span class="kdy-type">${item.type}</span>
+                        <div class="kdy-text">${item.text}</div>
+                    `;
+                    container.appendChild(card);
+                }, index * 100);
+            });
+        }
+    </script>
+</body>
+</html>
