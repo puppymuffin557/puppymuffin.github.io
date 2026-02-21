@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aurora Subliminal | 宇宙显化站</title>
+    <title>L'Étranger Été | Subliminal Station</title>
     <style>
         :root {
             --panel-bg: rgba(10, 10, 15, 0.72);
@@ -11,6 +11,7 @@
             --text-color: #ffffff;
             --glass-border: rgba(255, 255, 255, 0.15);
             --audio-filter: invert(1);
+            --avatar-box-bg: rgba(255, 255, 255, 0.9); /* 纯白略带通透 */
         }
 
         .light-mode {
@@ -19,11 +20,11 @@
             --text-color: #1a1a1c;
             --glass-border: rgba(0, 0, 0, 0.08);
             --audio-filter: invert(0);
+            --avatar-box-bg: #ffffff;
         }
 
         html {
             height: 100%;
-            /* 锁定你选定的这张最终背景 */
             background: #000 url('https://i.pinimg.com/736x/30/3f/f8/303ff83827b904fc55a5f313e1676734.jpg') no-repeat center center fixed;
             background-size: cover;
         }
@@ -31,24 +32,52 @@
         body {
             margin: 0; padding: 0; min-height: 100vh;
             color: var(--text-color);
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
             background: transparent;
             display: flex; flex-direction: column;
             transition: all 0.4s ease;
         }
 
         .hero-spacer {
-            height: 52vh; /* 优化留白比例 */
+            height: 55vh;
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
+            text-align: center;
         }
 
+        /* 标题样式：局外夏的站台 */
         header h1 {
-            font-size: clamp(2rem, 10vw, 2.8rem);
-            font-weight: 100; letter-spacing: 15px; margin: 0;
+            font-size: clamp(1.2rem, 6vw, 1.8rem);
+            font-weight: 200; letter-spacing: 6px; margin-bottom: 25px;
             text-shadow: 0 0 20px rgba(255,255,255,0.2);
-            opacity: 0.85;
+            opacity: 0.9;
             text-transform: uppercase;
+        }
+
+        /* 纯白圆角方块容器 */
+        .profile-box {
+            width: 80px; height: 80px;
+            background: var(--avatar-box-bg);
+            border-radius: 22px; /* 圆角方块 */
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-box:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        /* 内部圆形头像 */
+        .avatar-circle {
+            width: 62px; height: 62px;
+            border-radius: 50%; /* 完美圆形 */
+            overflow: hidden;
+            border: 2px solid rgba(0,0,0,0.05);
+        }
+
+        .avatar-circle img {
+            width: 100%; height: 100%; object-fit: cover;
         }
 
         .glass-panel {
@@ -56,21 +85,17 @@
             background: var(--panel-bg);
             backdrop-filter: blur(45px) saturate(140%);
             -webkit-backdrop-filter: blur(45px) saturate(140%);
-            
             border-radius: 45px 45px 0 0; 
             border: 1px solid var(--glass-border);
             border-bottom: none;
-            
             box-shadow: 0 -20px 50px rgba(0,0,0,0.5);
-            
-            padding: 45px 20px 100px 20px;
+            padding: 50px 20px 100px 20px;
             width: 94%; max-width: 820px;
             margin: 0 auto;
             display: flex; flex-direction: column; align-items: center;
-            transition: background 0.5s ease;
         }
 
-        .search-container { width: 100%; max-width: 420px; margin-bottom: 35px; }
+        .search-container { width: 100%; max-width: 420px; margin-bottom: 40px; }
 
         #searchInput {
             width: 100%; padding: 15px 20px; border-radius: 30px;
@@ -80,7 +105,6 @@
             text-align: center; outline: none;
             backdrop-filter: blur(10px);
             font-size: 0.95rem;
-            letter-spacing: 1px;
         }
 
         #audio-list { width: 100%; max-width: 620px; display: grid; gap: 18px; }
@@ -89,17 +113,16 @@
             background: var(--card-bg);
             border: 1px solid var(--glass-border);
             border-radius: 22px; padding: 25px;
-            transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: 0.3s ease;
         }
 
         .audio-card:hover { 
             background: rgba(255,255,255,0.09);
             transform: translateY(-3px);
-            border-color: rgba(255,255,255,0.3);
         }
 
-        .audio-info h3 { margin: 0; font-weight: 300; font-size: 1.15rem; letter-spacing: 0.5px; }
-        .audio-info p { font-size: 0.75rem; opacity: 0.4; margin: 8px 0 18px 0; line-height: 1.5; }
+        .audio-info h3 { margin: 0; font-weight: 300; font-size: 1.15rem; }
+        .audio-info p { font-size: 0.75rem; opacity: 0.4; margin: 8px 0 18px 0; }
 
         audio { width: 100%; filter: var(--audio-filter) opacity(0.4); height: 32px; }
 
@@ -107,25 +130,30 @@
             position: fixed; top: 20px; right: 20px; z-index: 100;
             background: rgba(255,255,255,0.08); border: 1px solid var(--glass-border);
             padding: 8px 16px; border-radius: 20px; cursor: pointer;
-            color: var(--text-color); backdrop-filter: blur(10px);
-            font-size: 0.65rem; letter-spacing: 1px;
+            color: var(--text-color); backdrop-filter: blur(10px); font-size: 0.65rem;
         }
     </style>
 </head>
 <body>
 
-    <button class="theme-toggle" onclick="document.body.classList.toggle('light-mode')">🌓 ENERGY MODE</button>
+    <button class="theme-toggle" onclick="document.body.classList.toggle('light-mode')">🌓 MODE</button>
 
     <div class="hero-spacer">
         <header>
-            <h1>AURORA</h1>
-            <p style="letter-spacing: 6px; opacity: 0.3; font-size: 0.6rem; margin-top: 12px;">QUANTUM FLOW</p>
+            <h1>L'Étranger Été's Subliminal Station</h1>
+            <div style="display: flex; justify-content: center;">
+                <div class="profile-box">
+                    <div class="avatar-circle">
+                        <img src="https://i.pinimg.com/736x/f3/9b/01/f39b01a0cb38ea86d3bbad0e419fbdae.jpg" alt="L'Étranger Été">
+                    </div>
+                </div>
+            </div>
         </header>
     </div>
 
     <main class="glass-panel">
         <div class="search-container">
-            <input type="text" id="searchInput" placeholder="探寻频率..." oninput="render()">
+            <input type="text" id="searchInput" placeholder="探寻深层频率..." oninput="render()">
         </div>
         <div id="audio-list"></div>
     </main>
