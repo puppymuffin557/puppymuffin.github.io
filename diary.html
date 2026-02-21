@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diary | Aurora Subliminal</title>
+    <style>
+        /* 继承主页核心变量 */
+        :root {
+            --panel-bg: rgba(8, 10, 20, 0.48); 
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --text-color: #ffffff;
+            --glass-border: rgba(255, 255, 255, 0.22); 
+            --input-bg: rgba(255, 255, 255, 0.07);
+        }
+
+        html {
+            height: 100%;
+            background: #000 url('https://i.pinimg.com/736x/a5/0b/73/a50b7362c72e720817ac2927c472f84c.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        body {
+            margin: 0; min-height: 100vh; color: var(--text-color);
+            font-family: -apple-system, sans-serif; display: flex; flex-direction: column;
+        }
+
+        .hero-spacer { height: 30vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        
+        .back-link {
+            text-decoration: none; color: #fff; font-size: 0.6rem; letter-spacing: 3px;
+            opacity: 0.4; border: 1px solid var(--glass-border); padding: 8px 15px; border-radius: 20px;
+            transition: 0.3s; margin-top: 20px;
+        }
+        .back-link:hover { opacity: 1; background: rgba(255,255,255,0.1); }
+
+        .glass-panel {
+            flex-grow: 1; background: var(--panel-bg); backdrop-filter: blur(45px);
+            border-radius: 60px 60px 0 0; border: 1px solid var(--glass-border);
+            padding: 50px 30px; width: 96%; max-width: 720px; margin: 0 auto;
+        }
+
+        /* 日记特有样式 */
+        .diary-area {
+            width: 100%; background: var(--input-bg); border: 1px solid var(--glass-border);
+            border-radius: 25px; padding: 25px; color: #fff; font-size: 1rem;
+            line-height: 1.8; outline: none; resize: none; box-sizing: border-box;
+            margin-bottom: 25px; min-height: 200px;
+        }
+
+        .save-btn {
+            width: 100%; background: rgba(255,255,255,0.1); border: 1px solid var(--glass-border);
+            color: #fff; padding: 15px; border-radius: 30px; cursor: pointer;
+            letter-spacing: 5px; font-weight: 200; transition: 0.3s;
+        }
+        .save-btn:hover { background: rgba(255,255,255,0.2); transform: scale(1.02); }
+
+        .history-title { font-size: 0.7rem; letter-spacing: 4px; opacity: 0.3; margin: 40px 0 20px 0; text-align: center; }
+        
+        .entry-card {
+            background: var(--card-bg); border: 1px solid var(--glass-border);
+            border-radius: 20px; padding: 20px; margin-bottom: 15px;
+            font-size: 0.9rem; font-weight: 300; opacity: 0.8;
+        }
+        .entry-date { font-size: 0.6rem; opacity: 0.4; margin-bottom: 8px; display: block; }
+    </style>
+</head>
+<body>
+
+    <div class="hero-spacer">
+        <h1 style="font-weight:100; letter-spacing:15px; margin:0; font-size:1.8rem;">DIARY</h1>
+        <a href="index.html" class="back-link">RETURN TO STATION</a>
+    </div>
+
+    <main class="glass-panel">
+        <textarea class="diary-area" id="diaryText" placeholder="在此刻，显化已经发生..."></textarea>
+        <button class="save-btn" onclick="saveEntry()">密封存入潜意识</button>
+
+        <div class="history-title">PAST VIBRATIONS</div>
+        <div id="history-container"></div>
+    </main>
+
+    <script>
+        function saveEntry() {
+            const text = document.getElementById('diaryText').value;
+            if(!text) return;
+            const container = document.getElementById('history-container');
+            const now = new Date();
+            const dateString = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            
+            const card = document.createElement('div');
+            card.className = 'entry-card';
+            card.innerHTML = `<span class="entry-date">${dateString}</span>${text}`;
+            
+            container.prepend(card);
+            document.getElementById('diaryText').value = '';
+            
+            // 简单的本地存储逻辑（刷新后依然存在）
+            const diaries = JSON.parse(localStorage.getItem('aurora_diaries') || '[]');
+            diaries.unshift({date: dateString, content: text});
+            localStorage.setItem('aurora_diaries', JSON.stringify(diaries));
+        }
+
+        // 加载历史
+        window.onload = () => {
+            const diaries = JSON.parse(localStorage.getItem('aurora_diaries') || '[]');
+            const container = document.getElementById('history-container');
+            diaries.forEach(d => {
+                container.innerHTML += `<div class="entry-card"><span class="entry-date">${d.date}</span>${d.content}</div>`;
+            });
+        }
+    </script>
+</body>
+</html>
