@@ -38,64 +38,66 @@
         }
 
         .hero-spacer {
-            height: 62vh; /* 稍微增加高度，适配更大的名片卡 */
+            height: 65vh; /* 适配长方形名片的高度 */
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
             text-align: center;
         }
 
         header h1 {
-            font-size: clamp(1.4rem, 6vw, 2rem);
+            font-size: clamp(1.2rem, 5vw, 1.8rem);
             font-weight: 800;
-            letter-spacing: 4px; 
-            margin-bottom: 30px;
+            letter-spacing: 5px; 
+            margin-bottom: 35px;
             text-shadow: 0 4px 15px rgba(0,0,0,0.5);
             text-transform: uppercase;
         }
 
-        /* 3:1 名片盒设计 */
+        /* 核心改动：长方形名片设计 */
         .profile-card {
-            width: 180px; 
-            height: 180px;
+            width: 160px;   /* 宽度缩减 */
+            height: 220px;  /* 高度增加，形成立式长方形 */
             background: var(--avatar-box-bg);
-            border-radius: 40px;
-            display: flex; flex-direction: column; /* 纵向排列内容 */
-            justify-content: center; align-items: center;
-            box-shadow: 0 15px 45px rgba(0,0,0,0.4);
-            transition: all 0.4s ease;
-            padding: 20px;
+            border-radius: 35px; /* 稍微调整圆角以匹配长方形比例 */
+            display: flex; flex-direction: column;
+            justify-content: flex-start; /* 从顶部开始排版 */
+            align-items: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            padding: 30px 15px; /* 增加上下内边距 */
             box-sizing: border-box;
         }
 
         .profile-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
         }
 
-        /* 顶部头像 */
         .avatar-circle {
-            width: 60px; height: 60px;
+            width: 65px; height: 65px;
             border-radius: 50%;
             overflow: hidden;
-            margin-bottom: 12px; /* 给下方文字留空 */
-            border: 1px solid rgba(0,0,0,0.05);
+            margin-bottom: 20px; /* 增加头像与文字的间距 */
+            border: 2px solid rgba(0,0,0,0.03);
+            flex-shrink: 0;
         }
         .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* 名片小字排版 */
         .card-info {
-            color: #1a1a1c; /* 黑色小字，在白底上清晰 */
-            text-align: center;
+            color: #1a1a1c;
+            display: flex; flex-direction: column;
+            align-items: center;
         }
         .card-info .name {
-            font-size: 0.9rem; font-weight: 600; margin: 0; letter-spacing: 2px;
+            font-size: 1rem; font-weight: 700; margin: 0; letter-spacing: 2px;
         }
         .card-info .role {
-            font-size: 0.6rem; font-weight: 400; opacity: 0.6; 
-            margin: 2px 0 6px 0; text-transform: uppercase; letter-spacing: 1px;
+            font-size: 0.65rem; font-weight: 400; opacity: 0.6; 
+            margin: 5px 0 12px 0; text-transform: uppercase; letter-spacing: 2px;
         }
         .card-info .social {
-            font-size: 0.5rem; font-weight: 300; opacity: 0.5;
-            white-space: nowrap; line-height: 1.4;
+            font-size: 0.55rem; font-weight: 300; opacity: 0.5;
+            line-height: 1.6; text-align: center;
         }
 
         .glass-panel {
@@ -113,16 +115,16 @@
             display: flex; flex-direction: column; align-items: center;
         }
 
+        /* 搜索框和列表保持原样 */
         .search-container { width: 100%; max-width: 420px; margin-bottom: 40px; }
         #searchInput {
-            width: 100%; padding: 15px 20px; border-radius: 30px;
+            width: 100%; padding: 15px 25px; border-radius: 30px;
             border: 1px solid var(--glass-border);
             background: rgba(255,255,255,0.06);
             color: var(--text-color);
             text-align: center; outline: none;
             backdrop-filter: blur(10px);
         }
-
         #audio-list { width: 100%; max-width: 620px; display: grid; gap: 18px; }
         .audio-card {
             background: var(--card-bg); border: 1px solid var(--glass-border);
