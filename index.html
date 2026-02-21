@@ -3,29 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aurora | 灵性空间</title>
+    <title>Aurora Subliminal | 宇宙显化站</title>
     <style>
         :root {
-            /* 深色模式变量 */
-            --panel-bg: rgba(10, 10, 15, 0.45);
+            --panel-bg: rgba(7, 8, 15, 0.45); 
             --card-bg: rgba(255, 255, 255, 0.04);
             --text-color: #ffffff;
-            --glass-border: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.18); 
             --audio-filter: invert(1);
         }
 
-        /* 修复：找回浅色模式变量 */
         .light-mode {
-            --panel-bg: rgba(255, 255, 255, 0.4);
-            --card-bg: rgba(0, 0, 0, 0.03);
-            --text-color: #1a1a1a;
+            --panel-bg: rgba(255, 255, 255, 0.35); 
+            --card-bg: rgba(255, 255, 255, 0.3);
+            --text-color: #121215;
             --glass-border: rgba(0, 0, 0, 0.1);
             --audio-filter: invert(0);
         }
 
         html {
             height: 100%;
-            /* 依然使用这张艺术构图背景 */
+            /* 换上你选的那张极具张力的艺术背景图 */
             background: #000 url('https://i.pinimg.com/736x/08/49/cc/0849ccf02d7fb8846b320ea97b75fc24.jpg') no-repeat center top fixed;
             background-size: cover;
         }
@@ -34,109 +32,118 @@
             margin: 0; padding: 0;
             min-height: 100vh;
             color: var(--text-color);
-            font-family: -apple-system, "PingFang SC", sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
             background: transparent;
             display: flex; flex-direction: column;
             transition: color 0.4s ease;
         }
 
-        /* 保持 70% 以上的留白，防止遮挡图片主体 */
         .hero-spacer {
-            height: 70vh; 
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            padding-bottom: 30px;
+            height: 55vh; /* 适配这张图的高度，确保画面主体露出来 */
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
         }
 
         header h1 {
-            font-size: 1.8rem;
-            font-weight: 100; letter-spacing: 18px; margin: 0;
-            text-shadow: 0 0 20px rgba(0,0,0,0.5);
-            opacity: 0.8;
-            text-transform: uppercase;
+            font-size: clamp(2rem, 10vw, 2.8rem);
+            font-weight: 100; letter-spacing: 16px; margin: 0;
+            text-shadow: 0 0 30px rgba(255,255,255,0.2);
+            opacity: 0.9;
         }
 
-        /* 悬浮玻璃面板 */
         .glass-panel {
             flex-grow: 1;
             background: var(--panel-bg);
-            backdrop-filter: blur(40px) saturate(150%);
-            -webkit-backdrop-filter: blur(40px) saturate(150%);
+            backdrop-filter: blur(45px) saturate(140%);
+            -webkit-backdrop-filter: blur(45px) saturate(140%);
             
-            border-radius: 40px 40px 0 0;
+            border-radius: 50px 50px 0 0;
             border: 1px solid var(--glass-border);
             border-bottom: none;
             
-            padding: 40px 25px 100px 25px;
-            width: 94%; max-width: 800px;
+            box-shadow: 0 -15px 50px rgba(0,0,0,0.4);
+            
+            padding: 50px 25px 120px 25px;
+            width: 95%; max-width: 800px;
             margin: 0 auto;
             display: flex; flex-direction: column; align-items: center;
-            transition: background 0.5s ease;
         }
 
         .search-container {
-            width: 100%; max-width: 350px; margin-bottom: 35px;
+            width: 100%; max-width: 400px; margin-bottom: 40px;
         }
 
         #searchInput {
-            width: 100%; padding: 12px; border: none;
-            border-bottom: 1px solid var(--glass-border);
-            background: transparent;
+            width: 100%; padding: 15px 25px; border-radius: 35px;
+            border: 1px solid var(--glass-border);
+            background: rgba(255,255,255,0.06);
             color: var(--text-color);
             text-align: center; outline: none;
-            font-size: 0.9rem; letter-spacing: 2px;
+            backdrop-filter: blur(10px);
+            font-size: 0.95rem;
         }
 
         #audio-list { width: 100%; max-width: 600px; display: grid; gap: 15px; }
 
         .audio-card {
             background: var(--card-bg);
-            border-radius: 15px;
-            padding: 20px;
-            transition: 0.3s;
             border: 1px solid var(--glass-border);
+            border-radius: 25px; padding: 28px;
+            transition: all 0.3s ease;
         }
 
-        .audio-card:hover { background: rgba(255,255,255,0.1); }
+        .audio-card:hover { 
+            background: rgba(255,255,255,0.08);
+            transform: translateY(-4px);
+        }
 
-        .audio-info h3 { margin: 0; font-weight: 300; font-size: 1.1rem; letter-spacing: 1px; }
-        .audio-info p { font-size: 0.8rem; opacity: 0.5; margin: 8px 0 15px 0; }
+        .audio-info h3 { margin: 0; font-weight: 300; font-size: 1.2rem; letter-spacing: 1px; }
+        .audio-info p { font-size: 0.8rem; opacity: 0.4; margin: 8px 0 20px 0; line-height: 1.6; }
 
-        audio { width: 100%; filter: var(--audio-filter); opacity: 0.4; height: 32px; }
+        audio { width: 100%; filter: var(--audio-filter) opacity(0.35); height: 35px; }
 
-        /* 模式切换按钮 */
         .theme-toggle {
             position: fixed; top: 25px; right: 25px; z-index: 100;
-            background: rgba(255,255,255,0.1); border: 1px solid var(--glass-border);
-            padding: 8px 15px; border-radius: 20px; cursor: pointer;
+            background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border);
+            padding: 8px 16px; border-radius: 20px; cursor: pointer;
             color: var(--text-color); backdrop-filter: blur(10px);
-            font-size: 0.7rem; letter-spacing: 1px;
+            font-size: 0.65rem; letter-spacing: 2px;
+        }
+
+        .download-btn {
+            color: var(--text-color); opacity: 0.3; text-decoration: none; font-size: 0.65rem;
+            border: 1px solid var(--glass-border); padding: 5px 15px; border-radius: 12px;
+            margin-top: 15px; display: inline-block;
         }
     </style>
 </head>
 <body>
 
-    <button class="theme-toggle" onclick="document.body.classList.toggle('light-mode')">🌓 ENERGY MODE</button>
+    <button class="theme-toggle" onclick="toggleTheme()">ENERGY MODE</button>
 
     <div class="hero-spacer">
         <header>
             <h1>AURORA</h1>
+            <p style="letter-spacing: 12px; opacity: 0.3; font-size: 0.55rem; margin-top: 15px;">QUANTUM COHERENCE</p>
         </header>
     </div>
 
     <main class="glass-panel">
         <div class="search-container">
-            <input type="text" id="searchInput" placeholder="SYNCING..." oninput="render()">
+            <input type="text" id="searchInput" placeholder="Search the frequency..." oninput="render()">
         </div>
         <div id="audio-list"></div>
     </main>
 
     <script>
         const audioData = [
-            { title: "VOID RESONANCE", desc: "Return to the zero point of consciousness.", url: "#" },
-            { title: "CRIMSON FLOW", desc: "Awaken the dormant energy within.", url: "#" }
+            { title: "Financial Abundance", desc: "Align your vibration with the flow of infinite prosperity.", url: "#" },
+            { title: "Cellular Healing", desc: "Deep resonance for DNA repair and physical revitalization.", url: "#" }
         ];
+
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+        }
 
         function render() {
             const term = document.getElementById('searchInput').value.toLowerCase();
@@ -152,6 +159,7 @@
                             <p>${item.desc}</p>
                         </div>
                         <audio controls src="${item.url}"></audio>
+                        <a href="${item.url}" download class="download-btn">DOWNLOAD</a>
                     `;
                     list.appendChild(card);
                 }
