@@ -6,26 +6,24 @@
     <title>Aurora Subliminal | 宇宙显化站</title>
     <style>
         :root {
-            /* 深色模式：暗色玻璃 */
-            --panel-bg: rgba(10, 10, 15, 0.65);
+            --panel-bg: rgba(15, 15, 20, 0.7);
             --card-bg: rgba(255, 255, 255, 0.05);
             --text-color: #ffffff;
-            --glass-border: rgba(255, 255, 255, 0.12);
-            --audio-filter: invert(1) hue-rotate(180deg);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --accent-glow: rgba(255, 255, 255, 0.1);
         }
 
         .light-mode {
-            /* 浅色模式：明亮玻璃 */
-            --panel-bg: rgba(255, 255, 255, 0.45);
-            --card-bg: rgba(255, 255, 255, 0.3);
+            --panel-bg: rgba(255, 255, 255, 0.5);
+            --card-bg: rgba(255, 255, 255, 0.4);
             --text-color: #1a1a1c;
-            --glass-border: rgba(0, 0, 0, 0.08);
-            --audio-filter: invert(0);
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --accent-glow: rgba(0, 0, 0, 0.05);
         }
 
-        /* 修复核心：确保背景图片始终存在且不随滚动消失 */
         html {
             height: 100%;
+            /* 锁定背景图 */
             background: #000 url('https://i.pinimg.com/736x/30/3f/f8/303ff83827b904fc55a5f313e1676734.jpg') no-repeat center center fixed;
             background-size: cover;
         }
@@ -35,117 +33,122 @@
             min-height: 100vh;
             color: var(--text-color);
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
-            transition: color 0.5s ease;
-            background: transparent; /* 必须透明以显示html的背景图 */
-        }
-
-        /* 顶部 3/4 留白区 */
-        .hero-spacer {
-            height: 70vh;
+            background: transparent;
             display: flex;
             flex-direction: column;
+        }
+
+        /* 顶部区域：给予背景足够的展示空间 */
+        .hero-spacer {
+            height: 55vh;
+            display: flex;
             justify-content: center;
             align-items: center;
-            text-align: center;
+            flex-shrink: 0;
         }
 
         header h1 {
-            font-size: clamp(2.5rem, 12vw, 4rem);
-            font-weight: 100; letter-spacing: 18px; margin: 0;
-            text-shadow: 0 0 25px rgba(255,255,255,0.4);
+            font-size: clamp(2rem, 10vw, 3rem);
+            font-weight: 100; letter-spacing: 15px; margin: 0;
+            text-shadow: 0 0 20px rgba(255,255,255,0.3);
             text-transform: uppercase;
         }
 
-        /* 底部毛玻璃面板 */
+        /* 核心优化：圆角浮动玻璃仓 */
         .glass-panel {
-            min-height: 30vh;
+            flex-grow: 1;
             background: var(--panel-bg);
-            backdrop-filter: blur(50px);
-            -webkit-backdrop-filter: blur(50px);
-            border-top: 1px solid var(--glass-border);
-            padding: 50px 20px 100px 20px;
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            
+            /* 圆角衔接设计 */
+            border-radius: 40px 40px 0 0; 
+            border: 1px solid var(--glass-border);
+            border-bottom: none;
+            
+            /* 悬浮阴影 */
+            box-shadow: 0 -20px 40px rgba(0,0,0,0.4);
+            
+            padding: 40px 20px 100px 20px;
+            width: 92%; /* 宽度略小于100%，产生侧面间隙感 */
+            max-width: 850px;
+            margin: 0 auto; /* 居中显示 */
+            
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: background 0.5s ease;
-            box-shadow: 0 -20px 50px rgba(0,0,0,0.3);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .search-container {
-            width: 100%; max-width: 500px; margin-bottom: 40px;
+            width: 100%; max-width: 450px; margin-bottom: 30px;
         }
 
         #searchInput {
-            width: 100%; padding: 18px 25px; border-radius: 40px;
+            width: 100%; padding: 15px 25px; border-radius: 30px;
             border: 1px solid var(--glass-border);
-            background: rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.05);
             color: var(--text-color);
             text-align: center; outline: none;
-            font-size: 1rem; backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
         }
 
-        #audio-list { width: 100%; max-width: 700px; display: grid; gap: 20px; }
+        #audio-list { width: 100%; max-width: 650px; display: grid; gap: 15px; }
 
         .audio-card {
             background: var(--card-bg);
             border: 1px solid var(--glass-border);
-            border-radius: 28px; padding: 30px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 20px; padding: 25px;
+            transition: 0.3s ease;
         }
 
         .audio-card:hover { 
-            transform: translateY(-5px); 
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.12);
             border-color: rgba(255,255,255,0.3);
         }
 
-        .audio-info h3 { margin: 0 0 10px 0; font-weight: 300; font-size: 1.4rem; letter-spacing: 1px; }
-        .audio-info p { font-size: 0.9rem; opacity: 0.5; line-height: 1.6; margin-bottom: 20px; }
+        .audio-info h3 { margin: 0; font-weight: 300; font-size: 1.2rem; letter-spacing: 1px; }
+        .audio-info p { font-size: 0.8rem; opacity: 0.4; margin: 8px 0 15px 0; }
 
-        audio { width: 100%; filter: var(--audio-filter); opacity: 0.6; }
+        audio { width: 100%; filter: invert(1) opacity(0.5); height: 35px; }
 
         .theme-toggle {
-            position: fixed; top: 25px; right: 25px; z-index: 100;
+            position: fixed; top: 20px; right: 20px; z-index: 100;
             background: rgba(255,255,255,0.1); border: 1px solid var(--glass-border);
-            padding: 10px 20px; border-radius: 25px; cursor: pointer;
-            color: var(--text-color); backdrop-filter: blur(15px);
-            font-size: 0.75rem; letter-spacing: 1px;
+            padding: 8px 16px; border-radius: 20px; cursor: pointer;
+            color: var(--text-color); backdrop-filter: blur(10px);
+            font-size: 0.7rem;
         }
 
         .download-btn {
-            display: inline-block; margin-top: 20px;
-            color: var(--text-color); opacity: 0.4;
-            text-decoration: none; font-size: 0.7rem;
-            border: 1px solid var(--glass-border);
-            padding: 6px 18px; border-radius: 20px;
-            transition: 0.3s;
+            color: var(--text-color); opacity: 0.3; text-decoration: none; font-size: 0.65rem;
+            border: 1px solid var(--glass-border); padding: 5px 12px; border-radius: 12px;
+            margin-top: 15px; display: inline-block;
         }
-        .download-btn:hover { opacity: 1; border-color: var(--text-color); }
-
     </style>
 </head>
 <body>
 
-    <button class="theme-toggle" onclick="toggleTheme()">🌓 能量模式</button>
+    <button class="theme-toggle" onclick="toggleTheme()">🌓 MODE</button>
 
     <div class="hero-spacer">
         <header>
             <h1>AURORA</h1>
-            <p style="letter-spacing: 6px; opacity: 0.5; font-size: 0.8rem; margin-top: 15px;">SPACE FOR MANIFESTATION</p>
+            <p style="letter-spacing: 5px; opacity: 0.4; font-size: 0.7rem; margin-top: 10px;">Quantum Frequency</p>
         </header>
     </div>
 
     <main class="glass-panel">
         <div class="search-container">
-            <input type="text" id="searchInput" placeholder="感知显化频率..." oninput="render()">
+            <input type="text" id="searchInput" placeholder="Search Frequency..." oninput="render()">
         </div>
         <div id="audio-list"></div>
     </main>
 
     <script>
         const audioData = [
-            { title: "[ 财富显化 ] 纯金频率", desc: "888Hz 财富磁场清理，吸引丰盛能量。", url: "#" },
-            { title: "[ 深度修复 ] 极光之沐", desc: "清理潜意识限制，重塑内在磁场。", url: "#" }
+            { title: "[ Wealth ] 888Hz Resonance", desc: "Attract abundance and clear financial blockages.", url: "#" },
+            { title: "[ Healing ] Aurora Mist", desc: "Subconscious repair and aura cleansing.", url: "#" }
         ];
 
         function toggleTheme() {
@@ -166,10 +169,7 @@
                             <p>${item.desc}</p>
                         </div>
                         <audio controls src="${item.url}"></audio>
-                        <div style="display:flex; justify-content:space-between; align-items:center">
-                            <a href="${item.url}" download class="download-btn">DOWNLOAD MP3</a>
-                            <span style="font-size:0.6rem; opacity:0.2; margin-top:20px;">FREQUENCY v2.6</span>
-                        </div>
+                        <a href="${item.url}" download class="download-btn">DOWNLOAD MP3</a>
                     `;
                     list.appendChild(card);
                 }
