@@ -38,7 +38,7 @@
         }
 
         .hero-spacer {
-            height: 65vh; /* 适配长方形名片的高度 */
+            height: 55vh; 
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
             text-align: center;
@@ -53,31 +53,32 @@
             text-transform: uppercase;
         }
 
-        /* 核心改动：长方形名片设计 */
+        /* 核心改动：横向长方形名片设计 */
         .profile-card {
-            width: 160px;   /* 宽度缩减 */
-            height: 220px;  /* 高度增加，形成立式长方形 */
+            width: 320px;   /* 横向变长 */
+            height: 140px;  /* 高度收窄 */
             background: var(--avatar-box-bg);
-            border-radius: 35px; /* 稍微调整圆角以匹配长方形比例 */
-            display: flex; flex-direction: column;
-            justify-content: flex-start; /* 从顶部开始排版 */
+            border-radius: 30px; 
+            display: flex; 
+            flex-direction: row; /* 改为横向排列 */
             align-items: center;
+            justify-content: flex-start;
             box-shadow: 0 20px 50px rgba(0,0,0,0.4);
             transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            padding: 30px 15px; /* 增加上下内边距 */
+            padding: 0 30px; 
             box-sizing: border-box;
+            gap: 25px; /* 头像和文字的间距 */
         }
 
         .profile-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-5px) scale(1.02);
             box-shadow: 0 30px 60px rgba(0,0,0,0.5);
         }
 
         .avatar-circle {
-            width: 65px; height: 65px;
+            width: 70px; height: 70px;
             border-radius: 50%;
             overflow: hidden;
-            margin-bottom: 20px; /* 增加头像与文字的间距 */
             border: 2px solid rgba(0,0,0,0.03);
             flex-shrink: 0;
         }
@@ -85,19 +86,18 @@
 
         .card-info {
             color: #1a1a1c;
-            display: flex; flex-direction: column;
-            align-items: center;
+            text-align: left; /* 配合横向布局，文字左对齐 */
         }
         .card-info .name {
-            font-size: 1rem; font-weight: 700; margin: 0; letter-spacing: 2px;
+            font-size: 1.1rem; font-weight: 700; margin: 0; letter-spacing: 1px;
         }
         .card-info .role {
-            font-size: 0.65rem; font-weight: 400; opacity: 0.6; 
-            margin: 5px 0 12px 0; text-transform: uppercase; letter-spacing: 2px;
+            font-size: 0.6rem; font-weight: 400; opacity: 0.6; 
+            margin: 2px 0 8px 0; text-transform: uppercase; letter-spacing: 2px;
         }
         .card-info .social {
             font-size: 0.55rem; font-weight: 300; opacity: 0.5;
-            line-height: 1.6; text-align: center;
+            line-height: 1.5;
         }
 
         .glass-panel {
@@ -115,7 +115,7 @@
             display: flex; flex-direction: column; align-items: center;
         }
 
-        /* 搜索框和列表保持原样 */
+        /* 搜索和列表部分保持一致 */
         .search-container { width: 100%; max-width: 420px; margin-bottom: 40px; }
         #searchInput {
             width: 100%; padding: 15px 25px; border-radius: 30px;
