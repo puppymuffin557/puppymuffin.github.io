@@ -6,26 +6,27 @@
     <title>Aurora Subliminal | 宇宙显化站</title>
     <style>
         :root {
-            /* 深色模式：折中的晶体感 */
-            --panel-bg: rgba(12, 12, 18, 0.45); /* 浓度回升，增加实体感 */
-            --card-bg: rgba(255, 255, 255, 0.06);
+            /* 深色模式：针对冷色星空优化 */
+            --panel-bg: rgba(8, 10, 20, 0.48); 
+            --card-bg: rgba(255, 255, 255, 0.04);
             --text-color: #ffffff;
-            --glass-border: rgba(255, 255, 255, 0.2); 
-            --input-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.22); 
+            --input-bg: rgba(255, 255, 255, 0.07);
         }
 
         .light-mode {
-            /* 浅色模式：柔和的乳白玻璃 */
-            --panel-bg: rgba(240, 240, 245, 0.4); 
-            --card-bg: rgba(255, 255, 255, 0.25);
-            --text-color: #1a1a1c;
-            --glass-border: rgba(0, 0, 0, 0.12);
-            --input-bg: rgba(255, 255, 255, 0.4);
+            /* 浅色模式：冰川般的纯净感 */
+            --panel-bg: rgba(250, 251, 255, 0.42); 
+            --card-bg: rgba(255, 255, 255, 0.3);
+            --text-color: #1a1a20;
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --input-bg: rgba(255, 255, 255, 0.5);
         }
 
         html {
             height: 100%;
-            background: #000 url('https://i.pinimg.com/736x/30/3f/f8/303ff83827b904fc55a5f313e1676734.jpg') no-repeat center center fixed;
+            /* 换上你刚选的 2c87e3 极地星空背景 */
+            background: #000 url('https://i.pinimg.com/1200x/2c/87/e3/2c87e3f430579f6d7e45a375854edd90.jpg') no-repeat center center fixed;
             background-size: cover;
         }
 
@@ -33,39 +34,39 @@
             margin: 0; padding: 0;
             min-height: 100vh;
             color: var(--text-color);
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
             background: transparent;
             display: flex; flex-direction: column;
             transition: color 0.4s ease;
         }
 
         .hero-spacer {
-            height: 48vh; 
+            height: 45vh; 
             display: flex; justify-content: center; align-items: center;
         }
 
         header h1 {
-            font-size: clamp(2rem, 10vw, 2.8rem);
-            font-weight: 200; letter-spacing: 14px; margin: 0;
-            text-shadow: 0 0 25px rgba(255,255,255,0.3);
+            font-size: clamp(2.2rem, 10vw, 2.6rem);
+            font-weight: 100; letter-spacing: 20px; margin: 0;
+            text-shadow: 0 0 30px rgba(255,255,255,0.25);
             text-transform: uppercase;
         }
 
-        /* 折中版：晶体悬浮面板 */
+        /* 3.0 悬浮面板：更细致的边框和更圆润的曲线 */
         .glass-panel {
             flex-grow: 1;
             background: var(--panel-bg);
-            backdrop-filter: blur(50px); /* 稍微降低模糊，让背景更“实”一点点 */
-            -webkit-backdrop-filter: blur(50px);
+            backdrop-filter: blur(45px);
+            -webkit-backdrop-filter: blur(45px);
             
-            border-radius: 45px 45px 0 0;
-            border: 1.5px solid var(--glass-border); /* 线条感更明确 */
+            border-radius: 60px 60px 0 0; /* 更优雅的大圆角 */
+            border: 1px solid var(--glass-border);
             border-bottom: none;
             
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.3);
+            box-shadow: 0 -15px 50px rgba(0,0,0,0.5);
             
-            padding: 45px 25px 100px 25px;
-            width: 95%; max-width: 820px;
+            padding: 60px 30px 100px 30px;
+            width: 96%; max-width: 800px;
             margin: 0 auto;
             
             display: flex; flex-direction: column; align-items: center;
@@ -73,46 +74,51 @@
         }
 
         .search-container {
-            width: 100%; max-width: 420px; margin-bottom: 35px;
+            width: 100%; max-width: 380px; margin-bottom: 45px;
         }
 
         #searchInput {
-            width: 100%; padding: 14px 20px; border-radius: 30px;
+            width: 100%; padding: 12px 20px; border-radius: 30px;
             border: 1px solid var(--glass-border);
             background: var(--input-bg);
             color: var(--text-color);
             text-align: center; outline: none;
             backdrop-filter: blur(10px);
+            font-size: 0.9rem; letter-spacing: 1px;
         }
 
-        #audio-list { width: 100%; max-width: 620px; display: grid; gap: 15px; }
+        #audio-list { width: 100%; max-width: 600px; display: grid; gap: 15px; }
 
         .audio-card {
             background: var(--card-bg);
             border: 1px solid var(--glass-border);
-            border-radius: 22px; padding: 25px;
-            transition: background 0.3s;
+            border-radius: 24px; padding: 25px;
+            transition: all 0.3s ease;
         }
 
-        .audio-card:hover { background: rgba(255,255,255,0.1); }
+        .audio-card:hover { 
+            background: rgba(255,255,255,0.08);
+            transform: translateY(-3px);
+            border-color: rgba(255,255,255,0.4);
+        }
 
-        .audio-info h3 { margin: 0; font-weight: 400; font-size: 1.2rem; letter-spacing: 0.5px; }
-        .audio-info p { font-size: 0.85rem; opacity: 0.5; margin: 8px 0 15px 0; font-weight: 300; }
+        .audio-info h3 { margin: 0; font-weight: 300; font-size: 1.1rem; letter-spacing: 1.5px; }
+        .audio-info p { font-size: 0.8rem; opacity: 0.4; margin: 8px 0 15px 0; line-height: 1.5; }
 
-        audio { width: 100%; filter: invert(1) opacity(0.5); height: 35px; }
+        audio { width: 100%; filter: invert(1) opacity(0.35); height: 32px; }
 
         .theme-toggle {
-            position: fixed; top: 20px; right: 20px; z-index: 100;
-            background: rgba(255,255,255,0.08); border: 1px solid var(--glass-border);
+            position: fixed; top: 25px; right: 25px; z-index: 100;
+            background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border);
             padding: 8px 16px; border-radius: 20px; cursor: pointer;
-            color: var(--text-color); backdrop-filter: blur(10px);
-            font-size: 0.7rem; letter-spacing: 1px;
+            color: var(--text-color); backdrop-filter: blur(15px);
+            font-size: 0.65rem; letter-spacing: 2px;
         }
 
         .download-btn {
-            color: var(--text-color); opacity: 0.4; text-decoration: none; font-size: 0.65rem;
+            color: var(--text-color); opacity: 0.3; text-decoration: none; font-size: 0.6rem;
             border: 1px solid var(--glass-border); padding: 5px 12px; border-radius: 12px;
-            margin-top: 15px; display: inline-block;
+            margin-top: 15px; display: inline-block; letter-spacing: 1px;
         }
     </style>
 </head>
@@ -123,21 +129,21 @@
     <div class="hero-spacer">
         <header>
             <h1>AURORA</h1>
-            <p style="letter-spacing: 6px; opacity: 0.5; font-size: 0.6rem; margin-top: 10px;">QUANTUM FLOW STATE</p>
+            <p style="letter-spacing: 10px; opacity: 0.4; font-size: 0.6rem; margin-top: 12px;">POLAR RESONANCE</p>
         </header>
     </div>
 
     <main class="glass-panel">
         <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Search Frequency..." oninput="render()">
+            <input type="text" id="searchInput" placeholder="Whisper your intent..." oninput="render()">
         </div>
         <div id="audio-list"></div>
     </main>
 
     <script>
         const audioData = [
-            { title: "Financial Abundance", desc: "Attract abundance and clear financial blockages.", url: "#" },
-            { title: "Spiritual Healing", desc: "Dissolve ego barriers and embrace universal love.", url: "#" }
+            { title: "Quantum Abundance", desc: "Sync with the resonance of limitless flow.", url: "#" },
+            { title: "Inner Stillness", desc: "Dissolve the noise and return to the void.", url: "#" }
         ];
 
         function toggleTheme() {
@@ -158,7 +164,7 @@
                             <p>${item.desc}</p>
                         </div>
                         <audio controls src="${item.url}"></audio>
-                        <a href="${item.url}" download class="download-btn">DOWNLOAD</a>
+                        <a href="${item.url}" download class="download-btn">ARCHIVE</a>
                     `;
                     list.appendChild(card);
                 }
