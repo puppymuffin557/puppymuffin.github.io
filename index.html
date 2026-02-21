@@ -6,15 +6,26 @@
     <title>Aurora | 灵性空间</title>
     <style>
         :root {
+            /* 深色模式变量 */
             --panel-bg: rgba(10, 10, 15, 0.45);
             --card-bg: rgba(255, 255, 255, 0.04);
             --text-color: #ffffff;
-            --glass-border: rgba(255, 255, 255, 0.15); 
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --audio-filter: invert(1);
+        }
+
+        /* 修复：找回浅色模式变量 */
+        .light-mode {
+            --panel-bg: rgba(255, 255, 255, 0.4);
+            --card-bg: rgba(0, 0, 0, 0.03);
+            --text-color: #1a1a1a;
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --audio-filter: invert(0);
         }
 
         html {
             height: 100%;
-            /* 使用这张极具艺术感的红黑/深蓝图 */
+            /* 依然使用这张艺术构图背景 */
             background: #000 url('https://i.pinimg.com/736x/08/49/cc/0849ccf02d7fb8846b320ea97b75fc24.jpg') no-repeat center top fixed;
             background-size: cover;
         }
@@ -23,85 +34,90 @@
             margin: 0; padding: 0;
             min-height: 100vh;
             color: var(--text-color);
-            font-family: "PingFang SC", "SF Pro Display", sans-serif;
+            font-family: -apple-system, "PingFang SC", sans-serif;
             background: transparent;
             display: flex; flex-direction: column;
+            transition: color 0.4s ease;
         }
 
-        /* 核心改动：把顶部留白拉得非常大，让图片露出来 */
+        /* 保持 70% 以上的留白，防止遮挡图片主体 */
         .hero-spacer {
-            height: 72vh; /* 把面板压低，让图片的主体内容完整呈现 */
+            height: 70vh; 
             display: flex;
             justify-content: center;
-            align-items: flex-end; /* 标题沉到底部边缘 */
-            padding-bottom: 20px;
+            align-items: flex-end;
+            padding-bottom: 30px;
         }
 
         header h1 {
-            font-size: 2rem;
-            font-weight: 100; letter-spacing: 20px; margin: 0;
-            text-shadow: 0 0 20px rgba(0,0,0,0.8);
+            font-size: 1.8rem;
+            font-weight: 100; letter-spacing: 18px; margin: 0;
+            text-shadow: 0 0 20px rgba(0,0,0,0.5);
             opacity: 0.8;
             text-transform: uppercase;
         }
 
-        /* 玻璃面板：做得更像是一个可以拉起的“托盘” */
+        /* 悬浮玻璃面板 */
         .glass-panel {
             flex-grow: 1;
             background: var(--panel-bg);
-            backdrop-filter: blur(40px) brightness(0.8);
-            -webkit-backdrop-filter: blur(40px) brightness(0.8);
+            backdrop-filter: blur(40px) saturate(150%);
+            -webkit-backdrop-filter: blur(40px) saturate(150%);
             
             border-radius: 40px 40px 0 0;
             border: 1px solid var(--glass-border);
             border-bottom: none;
             
-            padding: 40px 25px 80px 25px;
-            width: 100%; /* 填满宽度，保持这种冷峻的艺术感 */
-            max-width: 900px;
+            padding: 40px 25px 100px 25px;
+            width: 94%; max-width: 800px;
             margin: 0 auto;
             display: flex; flex-direction: column; align-items: center;
+            transition: background 0.5s ease;
         }
 
         .search-container {
-            width: 100%; max-width: 350px; margin-bottom: 30px;
+            width: 100%; max-width: 350px; margin-bottom: 35px;
         }
 
         #searchInput {
-            width: 100%; padding: 12px; border-radius: 0; /* 甚至可以尝试直角，更有艺术感 */
-            border: none; border-bottom: 1px solid var(--glass-border);
+            width: 100%; padding: 12px; border: none;
+            border-bottom: 1px solid var(--glass-border);
             background: transparent;
             color: var(--text-color);
             text-align: center; outline: none;
             font-size: 0.9rem; letter-spacing: 2px;
         }
 
-        #audio-list { width: 100%; max-width: 600px; display: grid; gap: 20px; }
+        #audio-list { width: 100%; max-width: 600px; display: grid; gap: 15px; }
 
         .audio-card {
             background: var(--card-bg);
-            border-left: 2px solid var(--glass-border); /* 只留左边线，更有设计感 */
+            border-radius: 15px;
             padding: 20px;
             transition: 0.3s;
+            border: 1px solid var(--glass-border);
         }
 
-        .audio-card:hover { background: rgba(255,255,255,0.08); }
+        .audio-card:hover { background: rgba(255,255,255,0.1); }
 
         .audio-info h3 { margin: 0; font-weight: 300; font-size: 1.1rem; letter-spacing: 1px; }
-        .audio-info p { font-size: 0.8rem; opacity: 0.4; margin: 10px 0 15px 0; }
+        .audio-info p { font-size: 0.8rem; opacity: 0.5; margin: 8px 0 15px 0; }
 
-        audio { width: 100%; filter: invert(1) opacity(0.2); height: 30px; }
+        audio { width: 100%; filter: var(--audio-filter); opacity: 0.4; height: 32px; }
 
+        /* 模式切换按钮 */
         .theme-toggle {
-            position: fixed; top: 20px; left: 20px; z-index: 100;
-            background: none; border: none; cursor: pointer;
-            color: var(--text-color); opacity: 0.3; font-size: 0.7rem;
+            position: fixed; top: 25px; right: 25px; z-index: 100;
+            background: rgba(255,255,255,0.1); border: 1px solid var(--glass-border);
+            padding: 8px 15px; border-radius: 20px; cursor: pointer;
+            color: var(--text-color); backdrop-filter: blur(10px);
+            font-size: 0.7rem; letter-spacing: 1px;
         }
     </style>
 </head>
 <body>
 
-    <button class="theme-toggle" onclick="document.body.classList.toggle('light-mode')">MODE</button>
+    <button class="theme-toggle" onclick="document.body.classList.toggle('light-mode')">🌓 ENERGY MODE</button>
 
     <div class="hero-spacer">
         <header>
