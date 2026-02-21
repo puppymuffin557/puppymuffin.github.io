@@ -3,28 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aurora Subliminal | 宇宙显化站</title>
+    <title>Aurora | 灵性空间</title>
     <style>
         :root {
-            /* 深色模式：粉紫星云专用色 */
-            --panel-bg: rgba(15, 10, 25, 0.42); /* 略微带一点深紫色底色 */
-            --card-bg: rgba(255, 255, 255, 0.05);
+            --panel-bg: rgba(10, 10, 15, 0.45);
+            --card-bg: rgba(255, 255, 255, 0.04);
             --text-color: #ffffff;
-            --glass-border: rgba(255, 255, 255, 0.2); 
-        }
-
-        .light-mode {
-            /* 浅色模式：如樱花雾般的质感 */
-            --panel-bg: rgba(255, 245, 255, 0.4); 
-            --card-bg: rgba(255, 255, 255, 0.3);
-            --text-color: #2a1a3a;
-            --glass-border: rgba(255, 255, 255, 0.5);
+            --glass-border: rgba(255, 255, 255, 0.15); 
         }
 
         html {
             height: 100%;
-            /* 换上你最新的粉紫星云背景 */
-            background: #000 url('https://i.pinimg.com/1200x/dc/27/e9/dc27e9993cbafa7add124d4832f0fa1f.jpg') no-repeat center center fixed;
+            /* 使用这张极具艺术感的红黑/深蓝图 */
+            background: #000 url('https://i.pinimg.com/736x/08/49/cc/0849ccf02d7fb8846b320ea97b75fc24.jpg') no-repeat center top fixed;
             background-size: cover;
         }
 
@@ -32,123 +23,104 @@
             margin: 0; padding: 0;
             min-height: 100vh;
             color: var(--text-color);
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+            font-family: "PingFang SC", "SF Pro Display", sans-serif;
             background: transparent;
             display: flex; flex-direction: column;
-            transition: color 0.4s ease;
         }
 
+        /* 核心改动：把顶部留白拉得非常大，让图片露出来 */
         .hero-spacer {
-            height: 50vh; /* 确保露出星云中心最美的粉紫色部分 */
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
+            height: 72vh; /* 把面板压低，让图片的主体内容完整呈现 */
+            display: flex;
+            justify-content: center;
+            align-items: flex-end; /* 标题沉到底部边缘 */
+            padding-bottom: 20px;
         }
 
         header h1 {
-            font-size: clamp(2.2rem, 11vw, 3rem);
-            font-weight: 100; letter-spacing: 18px; margin: 0;
-            /* 粉白色发光阴影，呼应背景 */
-            text-shadow: 0 0 35px rgba(255, 180, 255, 0.4);
-            opacity: 0.95;
+            font-size: 2rem;
+            font-weight: 100; letter-spacing: 20px; margin: 0;
+            text-shadow: 0 0 20px rgba(0,0,0,0.8);
+            opacity: 0.8;
+            text-transform: uppercase;
         }
 
+        /* 玻璃面板：做得更像是一个可以拉起的“托盘” */
         .glass-panel {
             flex-grow: 1;
             background: var(--panel-bg);
-            /* 极高饱和度补偿，让透出来的紫色更好看 */
-            backdrop-filter: blur(50px) saturate(160%);
-            -webkit-backdrop-filter: blur(50px) saturate(160%);
+            backdrop-filter: blur(40px) brightness(0.8);
+            -webkit-backdrop-filter: blur(40px) brightness(0.8);
             
-            border-radius: 50px 50px 0 0;
+            border-radius: 40px 40px 0 0;
             border: 1px solid var(--glass-border);
             border-bottom: none;
             
-            box-shadow: 0 -15px 50px rgba(40, 0, 60, 0.3);
-            
-            padding: 55px 25px 120px 25px;
-            width: 95%; max-width: 820px;
+            padding: 40px 25px 80px 25px;
+            width: 100%; /* 填满宽度，保持这种冷峻的艺术感 */
+            max-width: 900px;
             margin: 0 auto;
             display: flex; flex-direction: column; align-items: center;
         }
 
         .search-container {
-            width: 100%; max-width: 400px; margin-bottom: 40px;
+            width: 100%; max-width: 350px; margin-bottom: 30px;
         }
 
         #searchInput {
-            width: 100%; padding: 16px 25px; border-radius: 35px;
-            border: 1px solid var(--glass-border);
-            background: rgba(255, 255, 255, 0.08);
+            width: 100%; padding: 12px; border-radius: 0; /* 甚至可以尝试直角，更有艺术感 */
+            border: none; border-bottom: 1px solid var(--glass-border);
+            background: transparent;
             color: var(--text-color);
             text-align: center; outline: none;
-            backdrop-filter: blur(10px);
-            font-size: 1rem;
-            letter-spacing: 1px;
+            font-size: 0.9rem; letter-spacing: 2px;
         }
 
-        #audio-list { width: 100%; max-width: 600px; display: grid; gap: 18px; }
+        #audio-list { width: 100%; max-width: 600px; display: grid; gap: 20px; }
 
         .audio-card {
             background: var(--card-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 25px; padding: 28px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-left: 2px solid var(--glass-border); /* 只留左边线，更有设计感 */
+            padding: 20px;
+            transition: 0.3s;
         }
 
-        .audio-card:hover { 
-            background: rgba(255, 255, 255, 0.1);
-            transform: scale(1.02);
-            border-color: rgba(255, 180, 255, 0.4);
-        }
+        .audio-card:hover { background: rgba(255,255,255,0.08); }
 
-        .audio-info h3 { margin: 0; font-weight: 300; font-size: 1.3rem; letter-spacing: 1px; }
-        .audio-info p { font-size: 0.85rem; opacity: 0.5; margin: 10px 0 20px 0; line-height: 1.6; }
+        .audio-info h3 { margin: 0; font-weight: 300; font-size: 1.1rem; letter-spacing: 1px; }
+        .audio-info p { font-size: 0.8rem; opacity: 0.4; margin: 10px 0 15px 0; }
 
-        audio { width: 100%; filter: invert(1) opacity(0.3) hue-rotate(280deg); height: 35px; }
+        audio { width: 100%; filter: invert(1) opacity(0.2); height: 30px; }
 
         .theme-toggle {
-            position: fixed; top: 25px; right: 25px; z-index: 100;
-            background: rgba(255, 255, 255, 0.08); border: 1px solid var(--glass-border);
-            padding: 10px 18px; border-radius: 25px; cursor: pointer;
-            color: var(--text-color); backdrop-filter: blur(15px);
-            font-size: 0.7rem; letter-spacing: 2px;
+            position: fixed; top: 20px; left: 20px; z-index: 100;
+            background: none; border: none; cursor: pointer;
+            color: var(--text-color); opacity: 0.3; font-size: 0.7rem;
         }
-
-        .download-btn {
-            color: var(--text-color); opacity: 0.4; text-decoration: none; font-size: 0.65rem;
-            border: 1px solid var(--glass-border); padding: 6px 14px; border-radius: 15px;
-            margin-top: 15px; display: inline-block; transition: 0.3s;
-        }
-        .download-btn:hover { opacity: 1; border-color: #ffb4ff; }
     </style>
 </head>
 <body>
 
-    <button class="theme-toggle" onclick="toggleTheme()">ENERGY MODE</button>
+    <button class="theme-toggle" onclick="document.body.classList.toggle('light-mode')">MODE</button>
 
     <div class="hero-spacer">
         <header>
             <h1>AURORA</h1>
-            <p style="letter-spacing: 10px; opacity: 0.4; font-size: 0.65rem; margin-top: 15px;">STARDUST RESONANCE</p>
         </header>
     </div>
 
     <main class="glass-panel">
         <div class="search-container">
-            <input type="text" id="searchInput" placeholder="探寻星尘的共鸣..." oninput="render()">
+            <input type="text" id="searchInput" placeholder="SYNCING..." oninput="render()">
         </div>
         <div id="audio-list"></div>
     </main>
 
     <script>
         const audioData = [
-            { title: "Love & Harmony", desc: "Attract unconditional love and harmonize your inner vibration.", url: "#" },
-            { title: "Cosmic Abundance", desc: "Tap into the infinite supply of the universe.", url: "#" }
+            { title: "VOID RESONANCE", desc: "Return to the zero point of consciousness.", url: "#" },
+            { title: "CRIMSON FLOW", desc: "Awaken the dormant energy within.", url: "#" }
         ];
-
-        function toggleTheme() {
-            document.body.classList.toggle('light-mode');
-        }
 
         function render() {
             const term = document.getElementById('searchInput').value.toLowerCase();
@@ -164,7 +136,6 @@
                             <p>${item.desc}</p>
                         </div>
                         <audio controls src="${item.url}"></audio>
-                        <a href="${item.url}" download class="download-btn">DOWNLOAD</a>
                     `;
                     list.appendChild(card);
                 }
