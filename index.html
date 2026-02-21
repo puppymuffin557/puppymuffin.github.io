@@ -5,139 +5,211 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aurora Subliminal | 显化站台</title>
     <style>
-        /* 极光背景动画 */
+        /* 核心变量：方便后续一键改色 */
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --text-glow: 0 0 15px rgba(255, 255, 255, 0.5);
+            --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
         body {
             margin: 0;
             padding: 0;
-            background: linear-gradient(125deg, #020111, #050a30, #191970, #000000);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            /* 使用你提供的 Pinterest 沉浸式背景图 */
+            background: url('https://i.pinimg.com/1200x/34/38/4c/34384cc3ae54961b6e133600d7795f5e.jpg') no-repeat center center fixed;
+            background-size: cover;
             color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
         }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* 亮白发光标题 */
-        h1 {
-            margin-top: 50px;
-            font-size: 2.5rem;
-            text-shadow: 0 0 10px rgba(255,255,255,0.8), 0 0 20px rgba(255,255,255,0.5);
-            letter-spacing: 5px;
-            font-weight: 200;
-        }
-
-        /* 搜索框 */
-        .search-container {
-            margin: 30px 0;
-            width: 80%;
-            max-width: 600px;
-        }
-
-        input[type="text"] {
+        /* 顶部沉浸式 Header */
+        header {
             width: 100%;
-            padding: 15px;
-            border-radius: 30px;
-            border: 1px solid rgba(255,255,255,0.3);
-            background: rgba(255,255,255,0.1);
+            padding: 80px 0 40px 0;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 200;
+            letter-spacing: 8px;
+            margin: 0;
+            text-shadow: var(--text-glow);
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            letter-spacing: 4px;
+            margin-top: 15px;
+        }
+
+        /* 玻璃拟态搜索框 */
+        .search-container {
+            margin: 20px 0 50px 0;
+            width: 85%;
+            max-width: 500px;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 18px 25px;
+            border-radius: 40px;
+            border: 1px solid var(--glass-border);
+            background: var(--glass-bg);
             color: white;
+            font-size: 1rem;
             outline: none;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 0 15px rgba(255,255,255,0.1);
-            transition: 0.3s;
+            backdrop-filter: blur(15px); /* 毛玻璃核心代码 */
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: var(--card-shadow);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
-        input[type="text"]:focus {
-            box-shadow: 0 0 20px rgba(255,255,255,0.4);
-            background: rgba(255,255,255,0.2);
+        #searchInput:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 30px rgba(255,255,255,0.1);
         }
 
-        /* 音频卡片模拟 */
+        /* 音频列表容器 */
+        #audio-list {
+            width: 90%;
+            max-width: 800px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            padding-bottom: 100px;
+        }
+
+        /* 玻璃拟态卡片 */
         .audio-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 20px;
-            width: 80%;
-            max-width: 600px;
-            margin-bottom: 20px;
-            backdrop-filter: blur(10px);
-            transition: transform 0.3s;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px; /* 大圆角 */
+            padding: 25px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.4s ease, border-color 0.4s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .audio-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-8px);
+            border-color: rgba(255, 255, 255, 0.4);
         }
 
-        .audio-info h3 { margin: 0 0 10px 0; color: #fff; font-weight: 400; }
-        
-        .controls { display: flex; gap: 15px; align-items: center; margin-top: 15px; }
+        .audio-info h3 {
+            margin: 0 0 10px 0;
+            font-weight: 400;
+            font-size: 1.25rem;
+            letter-spacing: 1px;
+        }
 
-        button {
-            background: rgba(255,255,255,0.9);
-            color: #050a30;
-            border: none;
-            padding: 8px 20px;
+        .audio-info p {
+            font-size: 0.85rem;
+            opacity: 0.6;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        /* 定制 HTML5 播放器样式 */
+        audio {
+            width: 100%;
+            height: 40px;
+            filter: invert(1) hue-rotate(180deg) brightness(1.5); /* 使默认播放器适配深色模式 */
+            opacity: 0.8;
+        }
+
+        .actions {
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .download-btn {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 6px 15px;
             border-radius: 20px;
-            cursor: pointer;
-            font-weight: bold;
             transition: 0.3s;
         }
 
-        button:hover {
-            background: #fff;
-            box-shadow: 0 0 15px #fff;
+        .download-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border-color: #fff;
         }
 
-        a.download {
-            color: rgba(255,255,255,0.6);
-            text-decoration: none;
-            font-size: 0.9rem;
+        /* 响应式调整 */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; letter-spacing: 4px; }
+            #audio-list { grid-template-columns: 1fr; }
         }
-        
-        a.download:hover { color: #fff; }
-
     </style>
 </head>
 <body>
 
-    <h1>AURORA SUBLIMINAL</h1>
-    <p style="opacity: 0.7; letter-spacing: 2px;">在这里，听见宇宙的回响</p>
+    <header>
+        <h1>AURORA</h1>
+        <div class="subtitle">宇宙频率 · 潜意识显化</div>
+    </header>
 
     <div class="search-container">
-        <input type="text" placeholder="搜索你的显化频率...">
+        <input type="text" id="searchInput" placeholder="搜索你的显化频率..." oninput="renderFiles()">
     </div>
 
-    <div class="audio-card">
-        <div class="audio-info">
-            <h3>[ 财富显化 ] 纯金频率 - 24小时丰盛意识</h3>
-            <p style="font-size: 0.8rem; opacity: 0.6;">包含：888Hz 财富频率 + 潜意识肯定句</p>
+    <div id="audio-list">
         </div>
-        <div class="controls">
-            <button>在线播放</button>
-            <a href="#" class="download">💾 点击下载离线包</a>
-        </div>
-    </div>
 
-    <div class="audio-card">
-        <div class="audio-info">
-            <h3>[ 深度疗愈 ] 极光之沐 - 修复身心磁场</h3>
-            <p style="font-size: 0.8rem; opacity: 0.6;">适合：睡前聆听，清理负面限制信念</p>
-        </div>
-        <div class="controls">
-            <button>在线播放</button>
-            <a href="#" class="download">💾 点击下载离线包</a>
-        </div>
-    </div>
+    <script>
+        let audioData = [];
 
+        // 自动从 data.json 读取菜单
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                audioData = data;
+                renderFiles();
+            })
+            .catch(err => console.error("读取清单失败:", err));
+
+        function renderFiles() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const listElement = document.getElementById('audio-list');
+            listElement.innerHTML = '';
+
+            audioData.forEach(item => {
+                if (item.title.toLowerCase().includes(searchTerm) || item.desc.toLowerCase().includes(searchTerm)) {
+                    const card = document.createElement('div');
+                    card.className = 'audio-card';
+                    card.innerHTML = `
+                        <div class="audio-info">
+                            <h3>${item.title}</h3>
+                            <p>${item.desc}</p>
+                        </div>
+                        <audio controls src="${item.url}"></audio>
+                        <div class="actions">
+                            <span style="font-size:0.7rem; opacity:0.4;">QUANTUM ENERGY INTERFACE</span>
+                            <a href="${item.url}" download class="download-btn">💾 下载离线文件</a>
+                        </div>
+                    `;
+                    listElement.appendChild(card);
+                }
+            });
+        }
+    </script>
 </body>
 </html>
