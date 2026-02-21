@@ -14,36 +14,34 @@
             --avatar-box-bg: #ffffff;
         }
 
-        .light-mode {
-            --panel-bg: rgba(250, 250, 252, 0.55);
-            --card-bg: rgba(0, 0, 0, 0.03);
-            --text-color: #1a1a1c;
-            --glass-border: rgba(0, 0, 0, 0.08);
-            --audio-filter: invert(0);
-        }
-
-        html, body {
-            height: 100%; margin: 0; padding: 0;
-            background: #000; /* 兜底黑 */
-        }
-
-        /* 背景锁定 */
-        .bg-fixed {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://i.pinimg.com/736x/30/3f/f8/303ff83827b904fc55a5f313e1676734.jpg') no-repeat center center;
+        /* 强制底图显示：使用绝对定位的背景层防止被内容覆盖 */
+        .background-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #000 url('https://i.pinimg.com/736x/30/3f/f8/303ff83827b904fc55a5f313e1676734.jpg') no-repeat center center;
             background-size: cover;
+            z-index: -2;
+        }
+
+        /* 增加一层淡淡的暗色蒙版，让标题更突出 */
+        .background-overlay::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.2);
             z-index: -1;
         }
 
         body {
+            margin: 0; padding: 0; min-height: 100vh;
             color: var(--text-color);
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", sans-serif;
             display: flex; flex-direction: column;
-            transition: all 0.4s ease;
+            background: transparent;
         }
 
         .hero-spacer {
-            min-height: 60vh;
+            min-height: 62vh;
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
             padding: 40px 20px;
@@ -52,95 +50,104 @@
 
         header {
             width: 100%;
-            max-width: 500px;
+            max-width: 580px; /* 稍微放大标题显示区域 */
             display: flex; flex-direction: column; align-items: center;
         }
 
-        /* 修复后的图片样式，增加加载失败时的隐藏处理 */
+        /* 高清标题优化 */
         .title-image {
-            width: 90%; height: auto;
-            filter: drop-shadow(0 15px 30px rgba(0,0,0,0.6));
-            display: block;
+            width: 100%; 
+            height: auto;
+            image-rendering: -webkit-optimize-contrast; /* 针对 Webkit 浏览器的清晰度优化 */
+            filter: drop-shadow(0 15px 35px rgba(0,0,0,0.8));
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            will-change: transform;
+        }
+
+        .title-image:hover {
+            transform: scale(1.04);
         }
 
         .sub-title {
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             font-weight: 300;
             letter-spacing: 5px;
-            opacity: 0.35;
-            margin: 20px 0 35px 0;
+            opacity: 0.4;
+            margin: 25px 0 45px 0;
             text-transform: uppercase;
-            text-align: center;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
         /* 横向名片卡 */
         .profile-card {
-            width: 300px; height: 120px;
+            width: 310px; height: 125px;
             background: var(--avatar-box-bg);
-            border-radius: 28px;
+            border-radius: 32px;
             display: flex; flex-direction: row;
-            align-items: center; padding: 0 25px;
-            gap: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            align-items: center; padding: 0 28px;
+            gap: 22px; box-shadow: 0 25px 55px rgba(0,0,0,0.6);
+            transition: all 0.3s ease;
         }
 
+        .profile-card:hover { transform: translateY(-5px); }
+
         .avatar-circle {
-            width: 60px; height: 60px;
+            width: 65px; height: 65px;
             border-radius: 50%; overflow: hidden; flex-shrink: 0;
+            border: 1px solid rgba(0,0,0,0.05);
         }
         .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
 
         .card-info { color: #1a1a1c; text-align: left; }
-        .card-info .name { font-size: 1rem; font-weight: 700; margin: 0; }
-        .card-info .role { font-size: 0.5rem; opacity: 0.6; margin: 2px 0; text-transform: uppercase; }
-        .card-info .social { font-size: 0.5rem; opacity: 0.5; line-height: 1.4; }
+        .card-info .name { font-size: 1.05rem; font-weight: 700; margin: 0; letter-spacing: 1px; }
+        .card-info .role { font-size: 0.55rem; opacity: 0.7; text-transform: uppercase; margin: 2px 0 6px 0; letter-spacing: 1px; }
+        .card-info .social { font-size: 0.5rem; opacity: 0.5; line-height: 1.5; font-weight: 300; }
 
         .glass-panel {
             flex-grow: 1;
             background: var(--panel-bg);
-            backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
-            border-radius: 40px 40px 0 0;
+            backdrop-filter: blur(45px) saturate(140%);
+            -webkit-backdrop-filter: blur(45px) saturate(140%);
+            border-radius: 50px 50px 0 0;
             border: 1px solid var(--glass-border);
-            padding: 50px 20px;
-            width: 100%; max-width: 800px;
-            margin: 0 auto; box-sizing: border-box;
+            padding: 60px 20px 100px 20px;
+            width: 100%; max-width: 850px;
+            margin: 0 auto;
             display: flex; flex-direction: column; align-items: center;
+            box-sizing: border-box;
         }
 
         #searchInput {
-            width: 100%; max-width: 400px; padding: 15px; border-radius: 25px;
-            border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05);
-            color: white; text-align: center; margin-bottom: 40px;
+            width: 100%; max-width: 420px; padding: 18px; border-radius: 35px;
+            border: 1px solid var(--glass-border); background: rgba(255,255,255,0.06);
+            color: white; text-align: center; margin-bottom: 45px; outline: none;
+            font-size: 1rem;
         }
 
-        #audio-list { width: 100%; max-width: 600px; }
+        #audio-list { width: 100%; max-width: 620px; }
         .audio-card {
-            background: var(--card-bg); border-radius: 20px; padding: 20px; margin-bottom: 15px;
-            border: 1px solid var(--glass-border);
+            background: var(--card-bg); border-radius: 25px; padding: 25px; margin-bottom: 20px;
+            border: 1px solid var(--glass-border); transition: 0.3s ease;
         }
-        .audio-info h3 { margin: 0; font-size: 1.1rem; }
-        .audio-info p { font-size: 0.75rem; opacity: 0.4; margin: 5px 0 15px 0; }
-        audio { width: 100%; filter: var(--audio-filter); opacity: 0.5; }
-
-        .theme-toggle {
-            position: fixed; top: 15px; right: 15px; z-index: 100;
-            background: rgba(255,255,255,0.1); border: 1px solid var(--glass-border);
-            padding: 8px 15px; border-radius: 20px; color: white; font-size: 0.6rem;
-        }
+        .audio-card:hover { background: rgba(255,255,255,0.08); }
+        .audio-info h3 { margin: 0; font-size: 1.15rem; font-weight: 500; }
+        .audio-info p { font-size: 0.8rem; opacity: 0.4; margin: 8px 0 20px 0; }
+        audio { width: 100%; filter: var(--audio-filter) opacity(0.4); height: 35px; }
     </style>
 </head>
 <body>
-    <div class="bg-fixed"></div>
-    <button class="theme-toggle" onclick="document.body.classList.toggle('light-mode')">🌓 MODE</button>
+
+    <div class="background-overlay"></div>
 
     <div class="hero-spacer">
         <header>
-            <img src="https://i.ibb.co/7xWt1rBR/image.png" alt="TITLE" class="title-image" onerror="this.style.display='none'">
+            <img src="https://i.ibb.co/qLY8MsbM/37-20260222054722.png" alt="THE EXTRATERRESTRIAL" class="title-image">
             <div class="sub-title">局外夏的Subliminal站台</div>
         </header>
         
         <div class="profile-card">
             <div class="avatar-circle">
-                <img src="https://i.pinimg.com/736x/f3/9b/01/f39b01a0cb38ea86d3bbad0e419fbdae.jpg">
+                <img src="https://i.pinimg.com/736x/f3/9b/01/f39b01a0cb38ea86d3bbad0e419fbdae.jpg" alt="局外夏">
             </div>
             <div class="card-info">
                 <p class="name">「局外夏」</p>
@@ -151,14 +158,14 @@
     </div>
 
     <main class="glass-panel">
-        <input type="text" id="searchInput" placeholder="搜索频率..." oninput="render()">
+        <input type="text" id="searchInput" placeholder="探寻深层频率..." oninput="render()">
         <div id="audio-list"></div>
     </main>
 
     <script>
         const audioData = [
-            { title: "[ Wealth ] 888Hz Resonance", desc: "Attract abundance.", url: "#" },
-            { title: "[ Healing ] Aurora Mist", desc: "Aura cleansing.", url: "#" }
+            { title: "[ Wealth ] 888Hz Resonance", desc: "Attract abundance and clear financial blockages.", url: "#" },
+            { title: "[ Healing ] Aurora Mist", desc: "Subconscious repair and aura cleansing.", url: "#" }
         ];
 
         function render() {
@@ -167,12 +174,13 @@
             list.innerHTML = '';
             audioData.forEach(item => {
                 if (item.title.toLowerCase().includes(term)) {
-                    list.innerHTML += `
-                        <div class="audio-card">
-                            <div class="audio-info"><h3>${item.title}</h3><p>${item.desc}</p></div>
-                            <audio controls src="${item.url}"></audio>
-                        </div>
+                    const card = document.createElement('div');
+                    card.className = 'audio-card';
+                    card.innerHTML = `
+                        <div class="audio-info"><h3>${item.title}</h3><p>${item.desc}</p></div>
+                        <audio controls src="${item.url}"></audio>
                     `;
+                    list.appendChild(card);
                 }
             });
         }
