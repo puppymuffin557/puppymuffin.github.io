@@ -1,3 +1,4 @@
+就这个，不改了
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -6,120 +7,119 @@
     <title>Aurora Subliminal | 宇宙显化站</title>
     <style>
         :root {
-            --panel-bg: rgba(10, 11, 15, 0.45); 
-            --card-bg: rgba(255, 255, 255, 0.03);
+            /* 深色模式：针对冷色星空优化 */
+            --panel-bg: rgba(8, 10, 20, 0.48); 
+            --card-bg: rgba(255, 255, 255, 0.04);
             --text-color: #ffffff;
-            --glass-border: rgba(255, 255, 255, 0.18); 
-            --input-bg: rgba(255, 255, 255, 0.06);
-            --header-color: #ffffff;
-            --header-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
-            --accent-color: rgba(255, 255, 255, 0.8);
+            --glass-border: rgba(255, 255, 255, 0.22); 
+            --input-bg: rgba(255, 255, 255, 0.07);
         }
 
         .light-mode {
-            --panel-bg: rgba(250, 251, 255, 0.4); 
-            --card-bg: rgba(255, 255, 255, 0.25);
+            /* 浅色模式：冰川般的纯净感 */
+            --panel-bg: rgba(250, 251, 255, 0.42); 
+            --card-bg: rgba(255, 255, 255, 0.3);
             --text-color: #1a1a20;
-            --glass-border: rgba(0, 0, 0, 0.08);
-            --input-bg: rgba(255, 255, 255, 0.45);
-            --header-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            --accent-color: #1a1a20;
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --input-bg: rgba(255, 255, 255, 0.5);
         }
 
         html {
             height: 100%;
+            /* 换上你刚选的 2c87e3 极地星空背景 */
             background: #000 url('https://i.pinimg.com/736x/a5/0b/73/a50b7362c72e720817ac2927c472f84c.jpg') no-repeat center center fixed;
             background-size: cover;
         }
 
         body {
-            margin: 0; padding: 0; min-height: 100vh;
+            margin: 0; padding: 0;
+            min-height: 100vh;
             color: var(--text-color);
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
             background: transparent;
             display: flex; flex-direction: column;
+            transition: color 0.4s ease;
         }
 
-        /* --- 顶部区域 --- */
         .hero-spacer {
-            height: 40vh; 
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            height: 45vh; 
+            display: flex; justify-content: center; align-items: center;
         }
 
         header h1 {
-            font-size: clamp(2.2rem, 10vw, 2.8rem);
+            font-size: clamp(2.2rem, 10vw, 2.6rem);
             font-weight: 100; letter-spacing: 20px; margin: 0;
-            color: var(--header-color) !important;
-            text-shadow: var(--header-shadow);
+            text-shadow: 0 0 30px rgba(255,255,255,0.25);
             text-transform: uppercase;
         }
 
-        /* --- 导航栏 --- */
-        nav {
-            display: flex; gap: 30px; margin-top: 30px;
-        }
-
-        .nav-link {
-            font-size: 0.65rem; letter-spacing: 3px; cursor: pointer;
-            opacity: 0.4; transition: 0.3s; text-transform: uppercase;
-            border-bottom: 1px solid transparent; padding-bottom: 5px;
-        }
-
-        .nav-link.active {
-            opacity: 1; border-color: var(--accent-color);
-        }
-
-        /* --- 主面板 --- */
+        /* 3.0 悬浮面板：更细致的边框和更圆润的曲线 */
         .glass-panel {
             flex-grow: 1;
             background: var(--panel-bg);
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
-            border-radius: 60px 60px 0 0; 
+            backdrop-filter: blur(45px);
+            -webkit-backdrop-filter: blur(45px);
+            
+            border-radius: 60px 60px 0 0; /* 更优雅的大圆角 */
             border: 1px solid var(--glass-border);
-            padding: 50px 40px;
-            width: 92%; max-width: 720px; 
+            border-bottom: none;
+            
+            box-shadow: 0 -15px 50px rgba(0,0,0,0.5);
+            
+            padding: 60px 30px 100px 30px;
+            width: 96%; max-width: 800px;
             margin: 0 auto;
+            
+            display: flex; flex-direction: column; align-items: center;
             transition: all 0.5s ease;
         }
 
-        /* 页面切换动画 */
-        .page-content {
-            display: none; 
-            width: 100%; animation: fadeIn 0.5s ease;
+        .search-container {
+            width: 100%; max-width: 380px; margin-bottom: 45px;
         }
 
-        .page-content.active { display: block; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- 搜索与卡片样式 (保持不变) --- */
-        .search-container { width: 100%; max-width: 420px; margin: 0 auto 40px auto; }
         #searchInput {
-            width: 100%; padding: 14px 20px; border-radius: 30px;
-            border: 1px solid var(--glass-border); background: var(--input-bg);
-            color: var(--text-color); text-align: center; outline: none;
-            font-size: 0.9rem;
+            width: 100%; padding: 12px 20px; border-radius: 30px;
+            border: 1px solid var(--glass-border);
+            background: var(--input-bg);
+            color: var(--text-color);
+            text-align: center; outline: none;
+            backdrop-filter: blur(10px);
+            font-size: 0.9rem; letter-spacing: 1px;
         }
-        .audio-card {
-            background: var(--card-bg); border: 1px solid var(--glass-border);
-            border-radius: 28px; padding: 25px; margin-bottom: 15px;
-        }
-        audio { width: 100%; filter: invert(1) opacity(0.25); height: 30px; }
 
-        /* --- 功能页占位样式 --- */
-        .placeholder-view {
-            text-align: center; padding: 40px; opacity: 0.5; font-weight: 200;
+        #audio-list { width: 100%; max-width: 600px; display: grid; gap: 15px; }
+
+        .audio-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px; padding: 25px;
+            transition: all 0.3s ease;
         }
+
+        .audio-card:hover { 
+            background: rgba(255,255,255,0.08);
+            transform: translateY(-3px);
+            border-color: rgba(255,255,255,0.4);
+        }
+
+        .audio-info h3 { margin: 0; font-weight: 300; font-size: 1.1rem; letter-spacing: 1.5px; }
+        .audio-info p { font-size: 0.8rem; opacity: 0.4; margin: 8px 0 15px 0; line-height: 1.5; }
+
+        audio { width: 100%; filter: invert(1) opacity(0.35); height: 32px; }
 
         .theme-toggle {
             position: fixed; top: 25px; right: 25px; z-index: 100;
-            background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border);
-            padding: 10px 20px; border-radius: 20px; cursor: pointer;
-            color: var(--text-color); font-size: 0.6rem; letter-spacing: 2px;
+            background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border);
+            padding: 8px 16px; border-radius: 20px; cursor: pointer;
+            color: var(--text-color); backdrop-filter: blur(15px);
+            font-size: 0.65rem; letter-spacing: 2px;
+        }
+
+        .download-btn {
+            color: var(--text-color); opacity: 0.3; text-decoration: none; font-size: 0.6rem;
+            border: 1px solid var(--glass-border); padding: 5px 12px; border-radius: 12px;
+            margin-top: 15px; display: inline-block; letter-spacing: 1px;
         }
     </style>
 </head>
@@ -130,38 +130,15 @@
     <div class="hero-spacer">
         <header>
             <h1>AURORA</h1>
+            <p style="letter-spacing: 10px; opacity: 0.4; font-size: 0.6rem; margin-top: 12px;">POLAR RESONANCE</p>
         </header>
-        <nav>
-            <div class="nav-link active" onclick="showPage('audio-page', this)">Station</div>
-            <div class="nav-link" onclick="showPage('manifest-page', this)">Manifest</div>
-            <div class="nav-link" onclick="showPage('settings-page', this)">Settings</div>
-        </nav>
     </div>
 
     <main class="glass-panel">
-        <div id="audio-page" class="page-content active">
-            <div class="search-container">
-                <input type="text" id="searchInput" placeholder="Whisper your intent..." oninput="render()">
-            </div>
-            <div id="audio-list"></div>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Whisper your intent..." oninput="render()">
         </div>
-
-        <div id="manifest-page" class="page-content">
-            <div class="placeholder-view">
-                <h3>MANIFESTATION SPACE</h3>
-                <p>沉思你的愿望，让频率与之共鸣。</p>
-                <div style="border: 1px solid var(--glass-border); padding: 20px; border-radius: 20px; margin-top: 20px;">
-                    即将开启：意图记录仪与冥想计时
-                </div>
-            </div>
-        </div>
-
-        <div id="settings-page" class="page-content">
-            <div class="placeholder-view">
-                <h3>SETTINGS</h3>
-                <p>调整你的感知场。</p>
-            </div>
-        </div>
+        <div id="audio-list"></div>
     </main>
 
     <script>
@@ -174,33 +151,23 @@
             document.body.classList.toggle('light-mode');
         }
 
-        // 核心功能：切换页面
-        function showPage(pageId, navElement) {
-            // 隐藏所有页面
-            document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
-            // 激活当前页面
-            document.getElementById(pageId).classList.add('active');
-            
-            // 更新导航栏状态
-            document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
-            navElement.classList.add('active');
-        }
-
         function render() {
             const term = document.getElementById('searchInput').value.toLowerCase();
             const list = document.getElementById('audio-list');
             list.innerHTML = '';
             audioData.forEach(item => {
                 if (item.title.toLowerCase().includes(term)) {
-                    list.innerHTML += `
-                        <div class="audio-card">
-                            <div class="audio-info">
-                                <h3>${item.title}</h3>
-                                <p>${item.desc}</p>
-                            </div>
-                            <audio controls src="${item.url}"></audio>
+                    const card = document.createElement('div');
+                    card.className = 'audio-card';
+                    card.innerHTML = `
+                        <div class="audio-info">
+                            <h3>${item.title}</h3>
+                            <p>${item.desc}</p>
                         </div>
+                        <audio controls src="${item.url}"></audio>
+                        <a href="${item.url}" download class="download-btn">ARCHIVE</a>
                     `;
+                    list.appendChild(card);
                 }
             });
         }
