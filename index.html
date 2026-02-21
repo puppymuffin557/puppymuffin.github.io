@@ -6,7 +6,6 @@
     <title>AURORA | Subliminal Station</title>
     <style>
         :root {
-            /* 降低了背景透明度，增加灰度，减少色彩干扰 */
             --panel-bg: rgba(15, 15, 20, 0.65);
             --card-bg: rgba(255, 255, 255, 0.03);
             --text-color: #ffffff;
@@ -42,21 +41,18 @@
             background: transparent;
         }
 
-        /* --- 纯白微光标题 --- */
         .aurora-title {
-            font-size: clamp(3.5rem, 18vw, 7rem);
+            font-size: clamp(3rem, 15vw, 6rem);
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 12px;
             margin: 0;
             color: #ffffff;
-            /* 减弱了投影效果，避免过载 */
             text-shadow: 0 0 12px rgba(255, 255, 255, 0.25);
-            transition: all 0.5s ease;
         }
 
         .hero-spacer {
-            min-height: 60vh;
+            min-height: 55vh;
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
             padding: 40px 20px;
@@ -64,74 +60,93 @@
         }
 
         .sub-title {
-            font-size: 0.65rem; font-weight: 300; letter-spacing: 5px; opacity: 0.25;
-            margin: 15px 0 45px 0; text-transform: uppercase;
+            font-size: 0.6rem; font-weight: 300; letter-spacing: 5px; opacity: 0.25;
+            margin: 15px 0 40px 0; text-transform: uppercase;
         }
 
-        /* --- 低饱和度毛玻璃名片 --- */
         .profile-card {
-            width: 320px; height: 135px;
+            width: 300px; height: 120px;
             background: var(--profile-glass-bg);
-            /* 关键修改：降低saturate，增加模糊 */
             backdrop-filter: blur(25px) saturate(105%);
             -webkit-backdrop-filter: blur(25px) saturate(105%);
             border: 1px solid var(--glass-border);
-            border-radius: 35px;
+            border-radius: 30px;
             display: flex; flex-direction: row;
-            align-items: center; padding: 0 28px; gap: 22px;
+            align-items: center; padding: 0 25px; gap: 20px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-            transition: all 0.4s ease;
         }
 
         .avatar-circle {
-            width: 68px; height: 68px; border-radius: 50%; overflow: hidden;
-            flex-shrink: 0; 
+            width: 60px; height: 60px; border-radius: 50%; overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            filter: grayscale(10%); /* 给头像加一点点灰度，融入氛围 */
+            filter: grayscale(15%);
         }
         .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
 
-        .card-info { color: var(--profile-text); text-align: left; }
-        .card-info .name { font-size: 1.05rem; font-weight: 700; margin: 0; letter-spacing: 1px; }
-        .card-info .role { font-size: 0.55rem; opacity: 0.5; text-transform: uppercase; margin: 3px 0 8px 0; }
-        .card-info .social { font-size: 0.5rem; opacity: 0.4; line-height: 1.6; }
+        .card-info .name { font-size: 1rem; font-weight: 700; margin: 0; color: var(--profile-text); }
+        .card-info .role { font-size: 0.5rem; opacity: 0.5; text-transform: uppercase; margin: 2px 0 5px 0; color: var(--profile-text); }
+        .card-info .social { font-size: 0.45rem; opacity: 0.4; line-height: 1.5; color: var(--profile-text); }
 
-        .theme-toggle {
-            position: fixed; top: 25px; right: 25px; z-index: 100;
-            background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border);
-            padding: 10px 18px; border-radius: 20px; cursor: pointer; color: var(--text-color);
-            font-size: 0.6rem; backdrop-filter: blur(10px); opacity: 0.6;
-        }
-
-        /* 下方面板同步调低饱和度 */
+        /* --- 核心修改：收窄面板宽度 --- */
         .glass-panel {
-            flex-grow: 1; background: var(--panel-bg);
+            flex-grow: 1;
+            background: var(--panel-bg);
             backdrop-filter: blur(50px) saturate(100%);
             -webkit-backdrop-filter: blur(50px) saturate(100%);
-            border-radius: 50px 50px 0 0; border: 1px solid var(--glass-border);
-            padding: 60px 20px 100px 20px; width: 100%; max-width: 850px;
-            margin: 0 auto; display: flex; flex-direction: column; align-items: center;
+            border-radius: 40px 40px 0 0;
+            border: 1px solid var(--glass-border);
+            padding: 50px 30px 100px 30px; 
+            width: 90%; 
+            max-width: 580px; /* 从850px降至580px */
+            margin: 0 auto;
+            display: flex; flex-direction: column; align-items: center;
+            box-sizing: border-box;
         }
 
         #searchInput {
-            width: 100%; max-width: 420px; padding: 18px; border-radius: 35px;
-            border: 1px solid var(--glass-border); background: rgba(255,255,255,0.03);
-            color: var(--text-color); text-align: center; margin-bottom: 45px; outline: none;
-            font-size: 0.9rem;
+            width: 100%;
+            padding: 15px; 
+            border-radius: 30px;
+            border: 1px solid var(--glass-border); 
+            background: rgba(255,255,255,0.03);
+            color: var(--text-color); 
+            text-align: center; 
+            margin-bottom: 40px; 
+            outline: none;
+            font-size: 0.85rem;
         }
 
-        #audio-list { width: 100%; max-width: 620px; }
+        #audio-list { width: 100%; }
+        
         .audio-card {
-            background: var(--card-bg); border-radius: 25px; padding: 25px; margin-bottom: 20px;
+            background: var(--card-bg); 
+            border-radius: 20px; 
+            padding: 22px; 
+            margin-bottom: 18px;
             border: 1px solid var(--glass-border);
         }
-        audio { width: 100%; filter: var(--audio-filter) opacity(0.2); height: 35px; }
+
+        .audio-info h3 { margin: 0; font-size: 1rem; font-weight: 500; }
+        .audio-info p { font-size: 0.75rem; opacity: 0.3; margin: 6px 0 15px 0; }
+        
+        audio { 
+            width: 100%; 
+            filter: var(--audio-filter) opacity(0.2); 
+            height: 30px; 
+        }
+
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; z-index: 100;
+            background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border);
+            padding: 8px 15px; border-radius: 20px; cursor: pointer; color: var(--text-color);
+            font-size: 0.55rem; opacity: 0.5;
+        }
     </style>
 </head>
 <body>
 
     <div class="background-overlay"></div>
-    <button class="theme-toggle" onclick="document.body.classList.toggle('light-mode')">🌓 ENERGY MODE</button>
+    <button class="theme-toggle" onclick="document.body.classList.toggle('light-mode')">🌓 MODE</button>
 
     <div class="hero-spacer">
         <header>
