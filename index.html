@@ -31,54 +31,53 @@
         body {
             margin: 0; padding: 0; min-height: 100vh;
             color: var(--text-color);
-            font-family: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", sans-serif;
             background: transparent;
             display: flex; flex-direction: column;
             transition: all 0.4s ease;
         }
 
         .hero-spacer {
-            height: 65vh; 
+            min-height: 65vh; 
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
             text-align: center;
-            padding: 0 20px;
+            padding: 40px 20px;
         }
 
-        /* 核心改动：大标题聚拢排版 */
+        /* PNG标题图片排版 */
         header {
-            margin-bottom: 40px;
+            width: 100%;
+            max-width: 550px; /* 限制标题图片最大宽度 */
+            margin-bottom: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        header h1 {
-            font-size: clamp(3.5rem, 15vw, 5.5rem); /* 极大字号 */
-            font-weight: 900;
-            letter-spacing: -4px; /* 负间距，向中心聚拢 */
-            line-height: 0.85;    /* 极窄行高，让上下行挤压 */
-            margin: 0;
-            text-shadow: 0 10px 40px rgba(0,0,0,0.6);
-            text-transform: uppercase;
-            display: flex;
-            flex-direction: column;
+        .title-image {
+            width: 100%;
+            height: auto;
+            /* 这种滤镜可以防止PNG边缘发虚，并增加深度感 */
+            filter: drop-shadow(0 15px 30px rgba(0,0,0,0.6));
+            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
-
-        header h1 span {
-            display: block;
+        
+        .title-image:hover {
+            transform: scale(1.03);
         }
 
         .sub-title {
-            font-size: 0.7rem;
-            font-weight: 400;
-            letter-spacing: 3px;
-            opacity: 0.3; /* 低透明度 */
-            margin-top: 25px;
+            font-size: 0.65rem;
+            font-weight: 300;
+            letter-spacing: 6px;
+            opacity: 0.35;
+            margin-top: 20px;
+            margin-bottom: 40px;
             text-transform: uppercase;
         }
 
-        /* 横向名片卡保持平衡 */
+        /* 横向名片卡 */
         .profile-card {
             width: 320px;
             height: 130px;
@@ -89,7 +88,10 @@
             box-shadow: 0 25px 50px rgba(0,0,0,0.5);
             padding: 0 30px; box-sizing: border-box;
             gap: 22px;
+            transition: all 0.4s ease;
         }
+
+        .profile-card:hover { transform: translateY(-5px); }
 
         .avatar-circle {
             width: 68px; height: 68px;
@@ -128,6 +130,7 @@
             color: var(--text-color);
             text-align: center; outline: none;
             backdrop-filter: blur(10px);
+            font-size: 1rem;
         }
 
         #audio-list { width: 100%; max-width: 620px; display: grid; gap: 20px; }
@@ -154,57 +157,4 @@
 
     <div class="hero-spacer">
         <header>
-            <h1>
-                <span>THE EXTRA</span>
-                <span>TERRESTRIAL</span>
-            </h1>
-            <div class="sub-title">局外夏的Subliminal站台</div>
-        </header>
-        
-        <div style="display: flex; justify-content: center;">
-            <div class="profile-card">
-                <div class="avatar-circle">
-                    <img src="https://i.pinimg.com/736x/f3/9b/01/f39b01a0cb38ea86d3bbad0e419fbdae.jpg" alt="局外夏">
-                </div>
-                <div class="card-info">
-                    <p class="name">「局外夏」</p>
-                    <p class="role">submaker</p>
-                    <p class="social">bilibili 局外夏<br>YouTube@bulbby-j2m</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <main class="glass-panel">
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="探寻深层频率..." oninput="render()">
-        </div>
-        <div id="audio-list"></div>
-    </main>
-
-    <script>
-        const audioData = [
-            { title: "[ Wealth ] 888Hz Resonance", desc: "Attract abundance and clear financial blockages.", url: "#" },
-            { title: "[ Healing ] Aurora Mist", desc: "Subconscious repair and aura cleansing.", url: "#" }
-        ];
-
-        function render() {
-            const term = document.getElementById('searchInput').value.toLowerCase();
-            const list = document.getElementById('audio-list');
-            list.innerHTML = '';
-            audioData.forEach(item => {
-                if (item.title.toLowerCase().includes(term)) {
-                    const card = document.createElement('div');
-                    card.className = 'audio-card';
-                    card.innerHTML = `
-                        <div class="audio-info"><h3>${item.title}</h3><p>${item.desc}</p></div>
-                        <audio controls src="${item.url}"></audio>
-                    `;
-                    list.appendChild(card);
-                }
-            });
-        }
-        render();
-    </script>
-</body>
-</html>
+            
