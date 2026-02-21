@@ -11,8 +11,9 @@
             --text-color: #ffffff;
             --glass-border: rgba(255, 255, 255, 0.15);
             --audio-filter: invert(1);
-            --avatar-box-bg: #ffffff;
-            --glow-color: rgba(255, 255, 255, 0.6);
+            /* 名片专用变量 */
+            --profile-glass-bg: rgba(255, 255, 255, 0.1);
+            --profile-text: #ffffff;
         }
 
         .light-mode {
@@ -21,7 +22,8 @@
             --text-color: #1a1a1c;
             --glass-border: rgba(0, 0, 0, 0.1);
             --audio-filter: invert(0);
-            --glow-color: rgba(0, 0, 0, 0.1); /* 浅色模式下白光转为淡淡投影 */
+            --profile-glass-bg: rgba(0, 0, 0, 0.05);
+            --profile-text: #1a1a1c;
         }
 
         .background-overlay {
@@ -40,27 +42,18 @@
             background: transparent;
         }
 
-        /* --- 纯白发光标题核心 --- */
+        /* --- 纯白发光标题 --- */
         .aurora-title {
             font-size: clamp(3.5rem, 18vw, 7rem);
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 12px; /* 进一步拉开间距，更显空灵 */
+            letter-spacing: 12px;
             margin: 0;
             color: #ffffff;
-            /* 多层文本阴影营造白光扩散感 */
-            text-shadow: 
-                0 0 10px rgba(255, 255, 255, 0.3),
-                0 0 20px rgba(255, 255, 255, 0.2),
-                0 0 40px rgba(255, 255, 255, 0.1);
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.4), 0 0 30px rgba(255, 255, 255, 0.2);
             transition: all 0.5s ease;
         }
-
-        /* 浅色模式下标题变黑，取消发光 */
-        .light-mode .aurora-title {
-            color: #1a1a1c;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
+        .light-mode .aurora-title { color: #1a1a1c; text-shadow: none; }
 
         .hero-spacer {
             min-height: 60vh;
@@ -71,42 +64,52 @@
         }
 
         .sub-title {
-            font-size: 0.7rem;
-            font-weight: 300;
-            letter-spacing: 6px;
-            opacity: 0.3;
-            margin: 15px 0 45px 0;
-            text-transform: uppercase;
+            font-size: 0.7rem; font-weight: 300; letter-spacing: 6px; opacity: 0.3;
+            margin: 15px 0 45px 0; text-transform: uppercase;
         }
 
-        .theme-toggle {
-            position: fixed; top: 25px; right: 25px; z-index: 100;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--glass-border);
-            padding: 10px 18px; border-radius: 20px;
-            cursor: pointer; color: var(--text-color);
-            font-size: 0.65rem; backdrop-filter: blur(10px);
-        }
-
-        /* 横向名片保持 */
+        /* --- 名片毛玻璃风格化 (Glassmorphism) --- */
         .profile-card {
-            width: 310px; height: 125px;
-            background: var(--avatar-box-bg);
-            border-radius: 32px; display: flex; flex-direction: row;
+            width: 320px; height: 135px;
+            background: var(--profile-glass-bg);
+            /* 毛玻璃核心代码 */
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 35px;
+            display: flex; flex-direction: row;
             align-items: center; padding: 0 28px; gap: 22px;
-            box-shadow: 0 25px 55px rgba(0,0,0,0.6);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .profile-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            background: rgba(255, 255, 255, 0.15);
         }
 
         .avatar-circle {
-            width: 65px; height: 65px; border-radius: 50%; overflow: hidden;
-            flex-shrink: 0; border: 1px solid rgba(0,0,0,0.05);
+            width: 68px; height: 68px; border-radius: 50%; overflow: hidden;
+            flex-shrink: 0; 
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
         .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
-        .card-info { color: #1a1a1c; text-align: left; }
-        .card-info .name { font-size: 1.05rem; font-weight: 700; margin: 0; }
-        .card-info .role { font-size: 0.55rem; opacity: 0.7; text-transform: uppercase; margin: 2px 0 6px 0; }
-        .card-info .social { font-size: 0.5rem; opacity: 0.5; line-height: 1.5; }
 
+        .card-info { color: var(--profile-text); text-align: left; }
+        .card-info .name { font-size: 1.1rem; font-weight: 700; margin: 0; letter-spacing: 1px; }
+        .card-info .role { font-size: 0.6rem; opacity: 0.7; text-transform: uppercase; margin: 3px 0 8px 0; font-weight: 500; }
+        .card-info .social { font-size: 0.55rem; opacity: 0.6; line-height: 1.6; font-weight: 300; }
+
+        .theme-toggle {
+            position: fixed; top: 25px; right: 25px; z-index: 100;
+            background: var(--btn-bg); border: 1px solid var(--glass-border);
+            padding: 10px 18px; border-radius: 20px; cursor: pointer; color: var(--text-color);
+            font-size: 0.65rem; backdrop-filter: blur(10px);
+        }
+
+        /* 下方音频面板 */
         .glass-panel {
             flex-grow: 1; background: var(--panel-bg);
             backdrop-filter: blur(45px); -webkit-backdrop-filter: blur(45px);
