@@ -1,4 +1,3 @@
-就这个，不改了
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -7,7 +6,6 @@
     <title>Aurora Subliminal | 宇宙显化站</title>
     <style>
         :root {
-            /* 深色模式：针对冷色星空优化 */
             --panel-bg: rgba(8, 10, 20, 0.48); 
             --card-bg: rgba(255, 255, 255, 0.04);
             --text-color: #ffffff;
@@ -16,7 +14,6 @@
         }
 
         .light-mode {
-            /* 浅色模式：冰川般的纯净感 */
             --panel-bg: rgba(250, 251, 255, 0.42); 
             --card-bg: rgba(255, 255, 255, 0.3);
             --text-color: #1a1a20;
@@ -26,24 +23,25 @@
 
         html {
             height: 100%;
-            /* 换上你刚选的 2c87e3 极地星空背景 */
             background: #000 url('https://i.pinimg.com/736x/a5/0b/73/a50b7362c72e720817ac2927c472f84c.jpg') no-repeat center center fixed;
             background-size: cover;
         }
 
         body {
-            margin: 0; padding: 0;
-            min-height: 100vh;
+            margin: 0; padding: 0; min-height: 100vh;
             color: var(--text-color);
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
             background: transparent;
             display: flex; flex-direction: column;
             transition: color 0.4s ease;
         }
 
+        /* --- 头部与导航布局 --- */
         .hero-spacer {
-            height: 45vh; 
-            display: flex; justify-content: center; align-items: center;
+            min-height: 60vh; /* 增加高度以容纳浮动导航 */
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 40px 0;
         }
 
         header h1 {
@@ -51,75 +49,81 @@
             font-weight: 100; letter-spacing: 20px; margin: 0;
             text-shadow: 0 0 30px rgba(255,255,255,0.25);
             text-transform: uppercase;
+            color: #ffffff !important; /* 强制白色 */
         }
 
-        /* 3.0 悬浮面板：更细致的边框和更圆润的曲线 */
+        .sub-tag {
+            letter-spacing: 10px; opacity: 0.4; font-size: 0.6rem; 
+            margin-top: 12px; margin-bottom: 40px; color: #ffffff !important;
+        }
+
+        /* --- Glassmorphism 浮动导航网格 --- */
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            width: 90%;
+            max-width: 420px;
+        }
+
+        .nav-card {
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
+            padding: 20px 10px;
+            display: flex; flex-direction: column; align-items: center;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .nav-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+
+        .nav-icon { font-size: 1.2rem; margin-bottom: 8px; color: #fff; opacity: 0.8; }
+        .nav-label { font-size: 0.65rem; letter-spacing: 2px; color: #fff; text-transform: uppercase; font-weight: 300; }
+        .nav-desc { font-size: 0.5rem; opacity: 0.3; color: #fff; margin-top: 4px; }
+
+        /* --- 下方玻璃面板 --- */
         .glass-panel {
-            flex-grow: 1;
             background: var(--panel-bg);
             backdrop-filter: blur(45px);
             -webkit-backdrop-filter: blur(45px);
-            
-            border-radius: 60px 60px 0 0; /* 更优雅的大圆角 */
+            border-radius: 60px 60px 0 0;
             border: 1px solid var(--glass-border);
-            border-bottom: none;
-            
-            box-shadow: 0 -15px 50px rgba(0,0,0,0.5);
-            
             padding: 60px 30px 100px 30px;
-            width: 96%; max-width: 800px;
+            width: 96%; max-width: 720px; /* 采用你喜欢的窄屏宽度 */
             margin: 0 auto;
-            
             display: flex; flex-direction: column; align-items: center;
-            transition: all 0.5s ease;
         }
 
-        .search-container {
-            width: 100%; max-width: 380px; margin-bottom: 45px;
-        }
-
+        .search-container { width: 100%; max-width: 380px; margin-bottom: 45px; }
         #searchInput {
             width: 100%; padding: 12px 20px; border-radius: 30px;
-            border: 1px solid var(--glass-border);
-            background: var(--input-bg);
-            color: var(--text-color);
-            text-align: center; outline: none;
-            backdrop-filter: blur(10px);
-            font-size: 0.9rem; letter-spacing: 1px;
+            border: 1px solid var(--glass-border); background: var(--input-bg);
+            color: var(--text-color); text-align: center; outline: none;
+            font-size: 0.9rem;
         }
 
-        #audio-list { width: 100%; max-width: 600px; display: grid; gap: 15px; }
-
+        #audio-list { width: 100%; display: grid; gap: 15px; }
         .audio-card {
-            background: var(--card-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px; padding: 25px;
-            transition: all 0.3s ease;
+            background: var(--card-bg); border: 1px solid var(--glass-border);
+            border-radius: 24px; padding: 25px; transition: 0.3s;
         }
-
-        .audio-card:hover { 
-            background: rgba(255,255,255,0.08);
-            transform: translateY(-3px);
-            border-color: rgba(255,255,255,0.4);
-        }
-
         .audio-info h3 { margin: 0; font-weight: 300; font-size: 1.1rem; letter-spacing: 1.5px; }
-        .audio-info p { font-size: 0.8rem; opacity: 0.4; margin: 8px 0 15px 0; line-height: 1.5; }
-
+        .audio-info p { font-size: 0.8rem; opacity: 0.4; margin: 8px 0 15px 0; }
         audio { width: 100%; filter: invert(1) opacity(0.35); height: 32px; }
 
         .theme-toggle {
             position: fixed; top: 25px; right: 25px; z-index: 100;
             background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border);
             padding: 8px 16px; border-radius: 20px; cursor: pointer;
-            color: var(--text-color); backdrop-filter: blur(15px);
-            font-size: 0.65rem; letter-spacing: 2px;
-        }
-
-        .download-btn {
-            color: var(--text-color); opacity: 0.3; text-decoration: none; font-size: 0.6rem;
-            border: 1px solid var(--glass-border); padding: 5px 12px; border-radius: 12px;
-            margin-top: 15px; display: inline-block; letter-spacing: 1px;
+            color: var(--text-color); font-size: 0.65rem;
         }
     </style>
 </head>
@@ -130,8 +134,31 @@
     <div class="hero-spacer">
         <header>
             <h1>AURORA</h1>
-            <p style="letter-spacing: 10px; opacity: 0.4; font-size: 0.6rem; margin-top: 12px;">POLAR RESONANCE</p>
+            <p class="sub-tag">POLAR RESONANCE</p>
         </header>
+
+        <div class="nav-grid">
+            <a href="diary.html" class="nav-card">
+                <span class="nav-icon">✧</span>
+                <span class="nav-label">Diary</span>
+                <span class="nav-desc">显化日记</span>
+            </a>
+            <a href="order.html" class="nav-card">
+                <span class="nav-icon">✉</span>
+                <span class="nav-label">Order</span>
+                <span class="nav-desc">宇宙订单</span>
+            </a>
+            <a href="sp.html" class="nav-card">
+                <span class="nav-icon">⚓</span>
+                <span class="nav-label">SP Bridge</span>
+                <span class="nav-desc">显化记录</span>
+            </a>
+            <a href="kdy.html" class="nav-card">
+                <span class="nav-icon">◈</span>
+                <span class="nav-label">KDY Tool</span>
+                <span class="nav-desc">万能格式</span>
+            </a>
+        </div>
     </div>
 
     <main class="glass-panel">
@@ -147,9 +174,7 @@
             { title: "Inner Stillness", desc: "Dissolve the noise and return to the void.", url: "#" }
         ];
 
-        function toggleTheme() {
-            document.body.classList.toggle('light-mode');
-        }
+        function toggleTheme() { document.body.classList.toggle('light-mode'); }
 
         function render() {
             const term = document.getElementById('searchInput').value.toLowerCase();
@@ -157,17 +182,15 @@
             list.innerHTML = '';
             audioData.forEach(item => {
                 if (item.title.toLowerCase().includes(term)) {
-                    const card = document.createElement('div');
-                    card.className = 'audio-card';
-                    card.innerHTML = `
-                        <div class="audio-info">
-                            <h3>${item.title}</h3>
-                            <p>${item.desc}</p>
+                    list.innerHTML += `
+                        <div class="audio-card">
+                            <div class="audio-info">
+                                <h3>${item.title}</h3>
+                                <p>${item.desc}</p>
+                            </div>
+                            <audio controls src="${item.url}"></audio>
                         </div>
-                        <audio controls src="${item.url}"></audio>
-                        <a href="${item.url}" download class="download-btn">ARCHIVE</a>
                     `;
-                    list.appendChild(card);
                 }
             });
         }
