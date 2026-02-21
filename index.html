@@ -6,27 +6,23 @@
     <title>Aurora Subliminal | 宇宙显化站</title>
     <style>
         :root {
-            /* 深色模式：深邃紫青质感 */
-            --panel-bg: rgba(5, 5, 10, 0.5); 
-            --card-bg: rgba(255, 255, 255, 0.03);
+            --panel-bg: rgba(7, 8, 15, 0.4); 
+            --card-bg: rgba(255, 255, 255, 0.04);
             --text-color: #ffffff;
-            --glass-border: rgba(255, 255, 255, 0.15); 
-            --accent-glow: 0 -2px 10px rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.18); 
         }
 
         .light-mode {
-            /* 浅色模式：如晨雾般轻盈 */
-            --panel-bg: rgba(255, 255, 255, 0.35); 
-            --card-bg: rgba(255, 255, 255, 0.4);
-            --text-color: #1a1a2e;
-            --glass-border: rgba(255, 255, 255, 0.6);
-            --accent-glow: none;
+            --panel-bg: rgba(255, 255, 255, 0.3); 
+            --card-bg: rgba(255, 255, 255, 0.3);
+            --text-color: #121215;
+            --glass-border: rgba(255, 255, 255, 0.5);
         }
 
         html {
             height: 100%;
-            /* 换上你选的这这张超美星球图 */
-            background: #000 url('https://i.pinimg.com/736x/ad/b6/7f/adb67fb86f8d24c19ae43945ef4aca1b.jpg') no-repeat center top fixed;
+            /* 换上你最新的星云之眼背景 */
+            background: #000 url('https://i.pinimg.com/736x/03/cb/c7/03cbc769c2452808f23a7d19b5638387.jpg') no-repeat center center fixed;
             background-size: cover;
         }
 
@@ -41,41 +37,33 @@
         }
 
         .hero-spacer {
-            height: 55vh; /* 适配星球高度，确保核心发光点露出 */
+            height: 52vh; /* 刚好露出中心的星云之眼 */
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
         }
 
         header h1 {
-            font-size: clamp(2.4rem, 12vw, 3.2rem);
-            font-weight: 100; letter-spacing: 15px; margin: 0;
-            text-shadow: 0 0 40px rgba(255,255,255,0.3);
-            text-transform: uppercase;
-            animation: breathe 4s ease-in-out infinite alternate;
+            font-size: clamp(2rem, 10vw, 2.8rem);
+            font-weight: 100; letter-spacing: 16px; margin: 0;
+            text-shadow: 0 0 30px rgba(255,255,255,0.2);
+            opacity: 0.9;
         }
 
-        @keyframes breathe {
-            from { opacity: 0.7; transform: scale(0.98); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        /* 3.1 悬浮面板：边缘带有折射光的玻璃仓 */
         .glass-panel {
             flex-grow: 1;
             background: var(--panel-bg);
-            backdrop-filter: blur(40px) saturate(120%);
-            -webkit-backdrop-filter: blur(40px) saturate(120%);
+            backdrop-filter: blur(45px) saturate(130%);
+            -webkit-backdrop-filter: blur(45px) saturate(130%);
             
             border-radius: 50px 50px 0 0;
             border: 1px solid var(--glass-border);
             border-bottom: none;
             
-            box-shadow: var(--accent-glow), 0 -20px 60px rgba(0,0,0,0.6);
+            box-shadow: 0 -15px 50px rgba(0,0,0,0.4);
             
             padding: 50px 25px 120px 25px;
-            width: 94%; max-width: 800px;
+            width: 95%; max-width: 800px;
             margin: 0 auto;
-            
             display: flex; flex-direction: column; align-items: center;
         }
 
@@ -86,11 +74,11 @@
         #searchInput {
             width: 100%; padding: 15px 25px; border-radius: 35px;
             border: 1px solid var(--glass-border);
-            background: rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.06);
             color: var(--text-color);
             text-align: center; outline: none;
             backdrop-filter: blur(10px);
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
 
         #audio-list { width: 100%; max-width: 600px; display: grid; gap: 15px; }
@@ -98,31 +86,31 @@
         .audio-card {
             background: var(--card-bg);
             border: 1px solid var(--glass-border);
-            border-radius: 24px; padding: 25px;
+            border-radius: 25px; padding: 28px;
             transition: all 0.3s ease;
         }
 
         .audio-card:hover { 
             background: rgba(255,255,255,0.08);
-            transform: translateY(-5px);
+            transform: translateY(-4px);
         }
 
-        .audio-info h3 { margin: 0; font-weight: 300; font-size: 1.25rem; letter-spacing: 1px; }
-        .audio-info p { font-size: 0.85rem; opacity: 0.4; margin: 10px 0 20px 0; line-height: 1.6; }
+        .audio-info h3 { margin: 0; font-weight: 300; font-size: 1.2rem; letter-spacing: 1px; }
+        .audio-info p { font-size: 0.8rem; opacity: 0.4; margin: 8px 0 20px 0; line-height: 1.6; }
 
-        audio { width: 100%; filter: invert(1) opacity(0.4); height: 35px; }
+        audio { width: 100%; filter: invert(1) opacity(0.35); height: 35px; }
 
         .theme-toggle {
             position: fixed; top: 25px; right: 25px; z-index: 100;
-            background: rgba(255,255,255,0.1); border: 1px solid var(--glass-border);
+            background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border);
             padding: 8px 16px; border-radius: 20px; cursor: pointer;
             color: var(--text-color); backdrop-filter: blur(10px);
-            font-size: 0.7rem; letter-spacing: 1px;
+            font-size: 0.65rem; letter-spacing: 2px;
         }
 
         .download-btn {
             color: var(--text-color); opacity: 0.3; text-decoration: none; font-size: 0.65rem;
-            border: 1px solid var(--glass-border); padding: 6px 14px; border-radius: 15px;
+            border: 1px solid var(--glass-border); padding: 5px 15px; border-radius: 12px;
             margin-top: 15px; display: inline-block;
         }
     </style>
@@ -134,21 +122,21 @@
     <div class="hero-spacer">
         <header>
             <h1>AURORA</h1>
-            <p style="letter-spacing: 10px; opacity: 0.4; font-size: 0.6rem; margin-top: 15px;">QUANTUM ASCENSION</p>
+            <p style="letter-spacing: 12px; opacity: 0.3; font-size: 0.55rem; margin-top: 15px;">QUANTUM COHERENCE</p>
         </header>
     </div>
 
     <main class="glass-panel">
         <div class="search-container">
-            <input type="text" id="searchInput" placeholder="感知宇宙的频率..." oninput="render()">
+            <input type="text" id="searchInput" placeholder="Search the frequency..." oninput="render()">
         </div>
         <div id="audio-list"></div>
     </main>
 
     <script>
         const audioData = [
-            { title: "Manifesting Gold", desc: "Align with the supreme frequency of wealth and overflow.", url: "#" },
-            { title: "Universal Connection", desc: "Dissolve the separate self and merge with the infinite.", url: "#" }
+            { title: "Financial Abundance", desc: "Align your vibration with the flow of infinite prosperity.", url: "#" },
+            { title: "Cellular Healing", desc: "Deep resonance for DNA repair and physical revitalization.", url: "#" }
         ];
 
         function toggleTheme() {
