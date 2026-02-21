@@ -6,77 +6,68 @@
     <title>Aurora Subliminal | 宇宙显化站</title>
     <style>
         :root {
-            --body-bg: linear-gradient(180deg, #0a0b14 0%, #050508 100%);
-            --panel-bg: rgba(15, 16, 25, 0.65); 
-            --card-bg: rgba(255, 255, 255, 0.04);
+            --panel-bg: rgba(10, 10, 15, 0.7);
+            --card-bg: rgba(255, 255, 255, 0.05);
             --text-color: #ffffff;
-            --glass-border: rgba(255, 255, 255, 0.12); 
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --audio-filter: invert(1);
         }
 
         .light-mode {
-            --body-bg: linear-gradient(180deg, #f0f2f8 0%, #e0e4f0 100%);
-            --panel-bg: rgba(255, 255, 255, 0.5); 
-            --card-bg: rgba(0, 0, 0, 0.03);
-            --text-color: #1a1b25;
-            --glass-border: rgba(0, 0, 0, 0.08);
+            --panel-bg: rgba(255, 255, 255, 0.5);
+            --card-bg: rgba(255, 255, 255, 0.4);
+            --text-color: #1a1a1c;
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --audio-filter: invert(0);
         }
 
-        html, body {
-            height: 100%; margin: 0; padding: 0;
-            background: var(--body-bg);
+        html {
+            height: 100%;
+            /* 锁定你最爱的这张星空背景 */
+            background: #000 url('https://i.pinimg.com/736x/ad/b6/7f/adb67fb86f8d24c19ae43945ef4aca1b.jpg') no-repeat center top fixed;
+            background-size: cover;
+        }
+
+        body {
+            margin: 0; padding: 0; min-height: 100vh;
             color: var(--text-color);
-            font-family: -apple-system, "SF Pro Display", sans-serif;
-            transition: all 0.5s ease;
-            overflow-x: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+            background: transparent;
+            display: flex; flex-direction: column;
+            transition: color 0.4s ease;
         }
 
-        /* 顶部图片容器：缩小并居中 */
-        .image-container {
-            height: 40vh; /* 缩小图片占比 */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+        .hero-spacer {
+            height: 55vh; /* 留出足够的星空展示空间 */
+            display: flex; justify-content: center; align-items: center;
         }
 
-        .floating-img {
-            width: 85%;
-            max-width: 340px;
-            aspect-ratio: 3/4; /* 或者 1/1 根据你找的图调整 */
-            object-fit: cover;
-            border-radius: 40px; /* 大圆角 */
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            border: 1px solid var(--glass-border);
+        header h1 {
+            font-size: clamp(2rem, 10vw, 3rem);
+            font-weight: 100; letter-spacing: 15px; margin: 0;
+            text-shadow: 0 0 20px rgba(255,255,255,0.3);
+            text-transform: uppercase;
         }
 
-        /* 玻璃面板：占据大部分空间 */
         .glass-panel {
-            min-height: 65vh; /* 向上延伸 */
+            flex-grow: 1;
             background: var(--panel-bg);
-            backdrop-filter: blur(50px) saturate(150%);
-            -webkit-backdrop-filter: blur(50px) saturate(150%);
-            
-            border-radius: 50px 50px 0 0;
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border-radius: 40px 40px 0 0; 
             border: 1px solid var(--glass-border);
             border-bottom: none;
-            
-            box-shadow: 0 -15px 40px rgba(0,0,0,0.2);
-            padding: 40px 25px 120px 25px;
-            width: 100%; box-sizing: border-box;
-            max-width: 800px; margin: 0 auto;
-            
+            box-shadow: 0 -20px 40px rgba(0,0,0,0.4);
+            padding: 40px 20px 100px 20px;
+            width: 92%; max-width: 850px;
+            margin: 0 auto;
             display: flex; flex-direction: column; align-items: center;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        header { text-align: center; margin-bottom: 30px; }
-        header h1 { 
-            font-size: 1.5rem; font-weight: 200; letter-spacing: 12px; 
-            margin: 0; opacity: 0.9;
-        }
-
-        .search-container { width: 100%; max-width: 400px; margin-bottom: 35px; }
+        .search-container { width: 100%; max-width: 450px; margin-bottom: 30px; }
         #searchInput {
-            width: 100%; padding: 14px; border-radius: 30px;
+            width: 100%; padding: 15px 25px; border-radius: 30px;
             border: 1px solid var(--glass-border);
             background: rgba(255,255,255,0.05);
             color: var(--text-color);
@@ -84,55 +75,51 @@
             backdrop-filter: blur(10px);
         }
 
-        #audio-list { width: 100%; max-width: 600px; display: grid; gap: 15px; }
+        #audio-list { width: 100%; max-width: 650px; display: grid; gap: 15px; }
         .audio-card {
             background: var(--card-bg);
             border: 1px solid var(--glass-border);
-            border-radius: 20px; padding: 22px;
-            transition: 0.3s;
+            border-radius: 20px; padding: 25px;
+            transition: 0.3s ease;
         }
-        .audio-card:hover { transform: translateY(-3px); background: rgba(255,255,255,0.08); }
+        .audio-card:hover { transform: translateY(-2px); background: rgba(255,255,255,0.1); }
 
-        .audio-info h3 { margin: 0; font-weight: 300; font-size: 1.1rem; }
-        .audio-info p { font-size: 0.75rem; opacity: 0.4; margin: 8px 0 15px 0; }
+        .audio-info h3 { margin: 0; font-weight: 300; font-size: 1.2rem; }
+        .audio-info p { font-size: 0.8rem; opacity: 0.4; margin: 8px 0 15px 0; }
 
-        audio { width: 100%; filter: invert(1) opacity(0.4); height: 32px; }
+        audio { width: 100%; filter: var(--audio-filter) opacity(0.5); height: 35px; }
 
         .theme-toggle {
             position: fixed; top: 20px; right: 20px; z-index: 100;
             background: rgba(255,255,255,0.1); border: 1px solid var(--glass-border);
-            padding: 8px 15px; border-radius: 20px; cursor: pointer; color: var(--text-color);
-            font-size: 0.6rem; letter-spacing: 1px;
+            padding: 8px 16px; border-radius: 20px; cursor: pointer; color: var(--text-color);
+            font-size: 0.7rem;
         }
     </style>
 </head>
 <body>
 
-    <button class="theme-toggle" onclick="toggleTheme()">🌓 MODE</button>
+    <button class="theme-toggle" onclick="document.body.classList.toggle('light-mode')">🌓 MODE</button>
 
-    <div class="image-container">
-        <img src="https://i.pinimg.com/736x/ad/b6/7f/adb67fb86f8d24c19ae43945ef4aca1b.jpg" class="floating-img" alt="Focus">
+    <div class="hero-spacer">
+        <header>
+            <h1>AURORA</h1>
+            <p style="letter-spacing: 5px; opacity: 0.4; font-size: 0.7rem; margin-top: 10px;">Quantum Frequency</p>
+        </header>
     </div>
 
     <main class="glass-panel">
-        <header>
-            <h1>AURORA</h1>
-            <p style="letter-spacing: 4px; opacity: 0.3; font-size: 0.6rem; margin-top: 8px;">INNER RESONANCE</p>
-        </header>
-
         <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Search intent..." oninput="render()">
+            <input type="text" id="searchInput" placeholder="Search Frequency..." oninput="render()">
         </div>
         <div id="audio-list"></div>
     </main>
 
     <script>
         const audioData = [
-            { title: "Quantum Abundance", desc: "Align with the flow of infinite energy.", url: "#" },
-            { title: "Deep Stillness", desc: "Master the art of being.", url: "#" }
+            { title: "[ Wealth ] 888Hz Resonance", desc: "Attract abundance and clear financial blockages.", url: "#" },
+            { title: "[ Healing ] Aurora Mist", desc: "Subconscious repair and aura cleansing.", url: "#" }
         ];
-
-        function toggleTheme() { document.body.classList.toggle('light-mode'); }
 
         function render() {
             const term = document.getElementById('searchInput').value.toLowerCase();
@@ -143,10 +130,7 @@
                     const card = document.createElement('div');
                     card.className = 'audio-card';
                     card.innerHTML = `
-                        <div class="audio-info">
-                            <h3>${item.title}</h3>
-                            <p>${item.desc}</p>
-                        </div>
+                        <div class="audio-info"><h3>${item.title}</h3><p>${item.desc}</p></div>
                         <audio controls src="${item.url}"></audio>
                     `;
                     list.appendChild(card);
